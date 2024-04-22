@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
     // Spawns a new player object at given location.
     public void SpawnPlayer(Transform location)
     {
-        Instantiate(location, PlayerPrefab.transform.position, Quaternion.identity);
+        Instantiate(PlayerPrefab, location.transform.position, Quaternion.identity);
     }
     
     // Start is called before the first frame update
