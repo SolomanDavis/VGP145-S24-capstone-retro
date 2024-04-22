@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -106,19 +106,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dcatq78-8b3818c2-9e03-4179-9601-e87ac825a0ef_0
+      name: Background
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 163
+        width: 320
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -126,27 +139,6 @@ TextureImporter:
       bones: []
       spriteID: 5eab321f7ab15c54d8d002c4467edc5c
       internalID: -783751037
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dcatq78-8b3818c2-9e03-4179-9601-e87ac825a0ef_1
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 0
-        width: 157
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96806b8575930ac4899553941e945353
-      internalID: 580428283
       vertices: []
       indices: 
       edges: []
@@ -162,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      dcatq78-8b3818c2-9e03-4179-9601-e87ac825a0ef_0: -783751037
+      Background: -783751037
       dcatq78-8b3818c2-9e03-4179-9601-e87ac825a0ef_1: 580428283
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
