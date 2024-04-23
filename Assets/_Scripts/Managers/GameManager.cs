@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    // Player spawn location and Player prefab
+    [SerializeField] Transform PlayerSpawnLocation;
+    [SerializeField] GameObject PlayerPrefab;
+
     private int _score;
     public int Score => _score;
 
@@ -15,7 +19,6 @@ public class GameManager : Singleton<GameManager>
         set { _lives = value; }
     }
 
-
     // Add score to be called when enemies are destroyed.
     public int AddToScore(int amountToAdd)
     {
@@ -26,14 +29,22 @@ public class GameManager : Singleton<GameManager>
     // Spawns a new player object at given location.
     public void SpawnPlayer(Transform location)
     {
-
+        Instantiate(PlayerPrefab, location.transform.position, Quaternion.identity);
     }
-
     
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
+        if (PlayerSpawnLocation != null && PlayerPrefab != null)
+        {
+            SpawnPlayer(PlayerSpawnLocation);
+        }
+        else
+        {
+            Debug.LogWarning("No player spawn location set in GameManager");
+        }
     }
 
     // Update is called once per frame
