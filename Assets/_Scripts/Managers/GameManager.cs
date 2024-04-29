@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     // Player spawn location and Player prefab
-    [SerializeField] Transform PlayerSpawnLocation;
-    [SerializeField] GameObject PlayerPrefab;
+    [SerializeField] public Transform PlayerSpawnLocation;
+    [SerializeField] public GameObject PlayerPrefab;
 
     private int _score;
     public int Score => _score;
