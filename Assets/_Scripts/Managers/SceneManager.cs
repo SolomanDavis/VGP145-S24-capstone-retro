@@ -26,6 +26,8 @@ public class SceneManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text livesText;
 
+    // Only 2 scenes in play for now so no need for a dedicated Singleton class that also destroys itself on scene change.
+    // If more scenes are added, a dedicated Singleton class that also destroys itself on scene change will be needed.
     static SceneManager instance = null;
     public static SceneManager Instance => instance;
 
