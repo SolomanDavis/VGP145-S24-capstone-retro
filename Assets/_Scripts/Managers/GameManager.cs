@@ -10,7 +10,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public Transform PlayerSpawnLocation;
     [SerializeField] public GameObject PlayerPrefab;
 
-    private int _score;
+    private int _HighScore;
+
+    public int _score;
     public int Score => _score;
 
     private int _lives = 2;
@@ -56,6 +58,16 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("GameOver");
     }
 
+    //if score is > high-score sets high-score text with score and replaces previous high-score. 
+    public int HighScore(int _score)
+    {
+        if(_score > _HighScore) 
+        {
+           _HighScore = _score;
+        }
+
+        return _HighScore;
+    }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -72,10 +84,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
+    // When called in canvas manager it changes the scene. 
     public void ChangeScene(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex);
+    }
+
+    //Resets score and lives to starting default.
+    public void RestartGame()
+    {
+        _score = 0;
+        _lives = 2;
+        // will also need to restart the enemy script. 
     }
 
 
@@ -96,6 +116,14 @@ public class GameManager : Singleton<GameManager>
             _lives -= 1;
             Debug.Log(_lives.ToString());
         }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+
+            _score += 10;
+            Debug.Log(_lives.ToString());
+        }
+
     }
 
 

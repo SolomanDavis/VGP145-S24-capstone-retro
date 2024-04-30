@@ -409,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSpawnLocation: {fileID: 0}
   PlayerPrefab: {fileID: 0}
+  _score: 0
 --- !u!4 &326873322
 Transform:
   m_ObjectHideFlags: 0
@@ -1280,7 +1281,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 1467985076}
   gameOverMenu: {fileID: 1229614314}
   scoreText: {fileID: 406210565}
-  HighScoreText: {fileID: 0}
+  HighScoreText: {fileID: 150712129}
   LifeOne: {fileID: 421126319}
   LifeTwo: {fileID: 337521723}
   LifeThree: {fileID: 1593980264}

@@ -41,10 +41,15 @@ public class CanvasManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //creates and instance of the canvas manager.
         instance = this;
 
         if (startButton)
+        {
+            startButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
             startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(1));
+        }
+            
 
         if (gameOverQuitButton || pauseQuitButton)
         {
@@ -55,8 +60,12 @@ public class CanvasManager : MonoBehaviour
         if (mainMenuQuitButton)
             mainMenuQuitButton.onClick.AddListener(Quit);
 
-        //if(playAgainButton)
-        //    playAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+        if (playAgainButton)
+        {
+            playAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            playAgainButton.onClick.AddListener(() => SetMenus(null, gameOverMenu));
+        }
+           
 
         if (resumeButton)
             resumeButton.onClick.AddListener(() => SetMenus(null, pauseMenu));
@@ -69,6 +78,7 @@ public class CanvasManager : MonoBehaviour
 
 
 
+    //Sets menus from active to inactive.
     void SetMenus(GameObject menuToActive, GameObject menuToInactive)
     {
         if (menuToActive)
@@ -80,7 +90,7 @@ public class CanvasManager : MonoBehaviour
 
 
 
-
+    //Quits the game and stops playing in unity.
     private void Quit()
     {
 #if UNITY_EDITOR
@@ -120,6 +130,8 @@ public class CanvasManager : MonoBehaviour
         if (scoreText)
             scoreText.text = GameManager.Instance.Score.ToString();
 
+
+        //sets lives images to the number of player lives.
         float LivesImage = GameManager.Instance.Lives;
 
         switch (LivesImage)
@@ -159,16 +171,15 @@ public class CanvasManager : MonoBehaviour
               default:
               break;
         }
+
+        //setting high-score text.
+        if(HighScoreText)
+        {
+            HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
+        }
+        
     }
-
-   
-
-
-
-
-  
-
-
+     
 
 
 
