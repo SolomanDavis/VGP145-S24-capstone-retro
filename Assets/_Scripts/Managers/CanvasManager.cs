@@ -46,12 +46,14 @@ public class CanvasManager : MonoBehaviour
         if (startButton)
             startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(1));
 
-        if (gameOverQuitButton || pauseQuitButton || gameOverQuitButton)
+        if (gameOverQuitButton || pauseQuitButton)
         {
             gameOverQuitButton.onClick.AddListener(Quit);
             pauseQuitButton.onClick.AddListener(Quit);
-            gameOverQuitButton.onClick.AddListener(Quit);
         }
+
+        if (mainMenuQuitButton)
+            mainMenuQuitButton.onClick.AddListener(Quit);
 
         //if(playAgainButton)
         //    playAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
@@ -62,8 +64,6 @@ public class CanvasManager : MonoBehaviour
         if (mainMenuButton)
             mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(0));
 
-        if (scoreText)
-            scoreText.text = GameManager.Instance.Score.ToString();
 
     }
 
@@ -116,6 +116,9 @@ public class CanvasManager : MonoBehaviour
         {
             gameOverMenu.SetActive(true);
         }
+
+        if (scoreText)
+            scoreText.text = GameManager.Instance.Score.ToString();
 
         float LivesImage = GameManager.Instance.Lives;
 
