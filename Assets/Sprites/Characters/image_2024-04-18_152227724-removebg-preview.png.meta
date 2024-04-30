@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_6
+      name: Player
       rect:
         serializedVersion: 2
         x: 31
@@ -2380,6 +2380,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Player: 102847094
       image_2024-04-18_152227724-removebg-preview_0: -374349775
       image_2024-04-18_152227724-removebg-preview_1: -1432263687
       image_2024-04-18_152227724-removebg-preview_10: -974546385
@@ -2468,7 +2469,6 @@ TextureImporter:
       image_2024-04-18_152227724-removebg-preview_57: -1772623484
       image_2024-04-18_152227724-removebg-preview_58: 181601021
       image_2024-04-18_152227724-removebg-preview_59: -1514828517
-      image_2024-04-18_152227724-removebg-preview_6: 102847094
       image_2024-04-18_152227724-removebg-preview_60: 1097064253
       image_2024-04-18_152227724-removebg-preview_61: 650885349
       image_2024-04-18_152227724-removebg-preview_62: -1665034765

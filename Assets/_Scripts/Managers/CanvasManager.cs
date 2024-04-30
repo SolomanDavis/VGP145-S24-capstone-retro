@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
-public class SceneManager : MonoBehaviour
+public class CanvasManager : MonoBehaviour
 {
     [Header("Button")]
     public Button startButton;
@@ -24,27 +25,46 @@ public class SceneManager : MonoBehaviour
 
     [Header("Text")]
     public TMP_Text scoreText;
-    public TMP_Text livesText;
+    public TMP_Text HighScoreText;
+
+    [Header("Image")]
+    public Image LifeOne;
+    public Image LifeTwo;
+    public Image LifeThree; 
+
 
     // Only 2 scenes in play for now so no need for a dedicated Singleton class that also destroys itself on scene change.
     // If more scenes are added, a dedicated Singleton class that also destroys itself on scene change will be needed.
-    static SceneManager instance = null;
-    public static SceneManager Instance => instance;
+    static CanvasManager instance = null;
+    public static CanvasManager Instance => instance;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
 
-        if (mainMenuQuitButton)
-            mainMenuQuitButton.onClick.AddListener(Quit);
-        if (gameOverQuitButton)
+        if (startButton)
+            startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(1));
+
+        if (gameOverQuitButton || pauseQuitButton || gameOverQuitButton)
+        {
             gameOverQuitButton.onClick.AddListener(Quit);
-        if (pauseQuitButton)
             pauseQuitButton.onClick.AddListener(Quit);
+            gameOverQuitButton.onClick.AddListener(Quit);
+        }
+
+        //if(playAgainButton)
+        //    playAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
 
         if (resumeButton)
             resumeButton.onClick.AddListener(() => SetMenus(null, pauseMenu));
+
+        if (mainMenuButton)
+            mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(0));
+
+        if (scoreText)
+            scoreText.text = GameManager.Instance.Score.ToString();
+
     }
 
 
@@ -91,7 +111,59 @@ public class SceneManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+
+        if (GameManager.Instance.Lives == 0)
+        {
+            gameOverMenu.SetActive(true);
+        }
+
+        float LivesImage = GameManager.Instance.Lives;
+
+        switch (LivesImage)
+        {
+            case 3:
+
+                LifeOne.enabled = true; 
+                LifeTwo.enabled = true; 
+                LifeThree.enabled = true;                
+                break;
+
+             case 2:
+
+                LifeTwo.enabled = true;
+                LifeOne.enabled = true;
+                LifeThree.enabled= false;
+                break;
+
+
+
+             case 1:
+
+                LifeOne.enabled = true;
+                LifeTwo.enabled = false;
+                LifeThree.enabled = false;
+
+                break;
+
+            case 0:
+
+                LifeOne.enabled = false;
+                LifeTwo.enabled= false;
+                LifeThree.enabled = false;
+                break;
+
+
+              default:
+              break;
+        }
     }
+
+   
+
+
+
+
+  
 
 
 

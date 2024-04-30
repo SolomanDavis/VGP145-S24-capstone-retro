@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -50,6 +52,7 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         // Function to be completed
+        
         Debug.Log("GameOver");
     }
 
@@ -70,9 +73,31 @@ public class GameManager : Singleton<GameManager>
     }
 
 
+    public void ChangeScene(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex);
+    }
+
+
     // Update is called once per frame
     //protected override void Update()
     //{        
     //}
     // Not sure if we need it.
+
+
+
+    //Added to test game over menu. 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+
+            _lives -= 1;
+            Debug.Log(_lives.ToString());
+        }
+    }
+
+
+
 }

@@ -846,7 +846,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1020737153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09bdc50b2ef557c4fb91a36219063a8f, type: 3}
+  m_Script: {fileID: 11500000, guid: d7365f394b4a41143ae945ffcd2cb143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 205126333}
@@ -856,7 +856,7 @@ MonoBehaviour:
   mainMenuButton: {fileID: 0}
   gameOverQuitButton: {fileID: 0}
   pauseQuitButton: {fileID: 0}
-  mainMenu: {fileID: 1065716363}
+  mainMenu: {fileID: 0}
   pauseMenu: {fileID: 0}
   gameOverMenu: {fileID: 0}
   scoreText: {fileID: 0}
