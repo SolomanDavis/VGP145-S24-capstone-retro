@@ -148,7 +148,6 @@ public class CanvasManager : MonoBehaviour
     {
         for(int i = 0; i < LifeImages.Length; ++i)
         {
-            Debug.Log("current index " + i.ToString() + "Current number of lives " + lives.ToString());
             LifeImages[i].enabled = i < lives;
         }
         
