@@ -6,31 +6,31 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public class CanvasManager : MonoBehaviour
 {
     [Header("Button")]
-    public Button startButton;
-    public Button mainMenuQuitButton;
-    public Button resumeButton;
-    public Button playAgainButton;
-    public Button mainMenuButton;
-    public Button gameOverQuitButton;
-    public Button pauseQuitButton;
+    public Button StartButton;
+    public Button MainMenuQuitButton;
+    public Button ResumeButton;
+    public Button PlayAgainButton;
+    public Button MainMenuButton;
+    public Button GameOverQuitButton;
+    public Button PauseQuitButton;
 
     [Header("Menus")]
-    public GameObject mainMenu;
-    public GameObject pauseMenu;
-    public GameObject gameOverMenu;
+    public GameObject MainMenu;
+    public GameObject PauseMenu;
+    public GameObject GameOverMenu;
 
     [Header("Text")]
-    public TMP_Text scoreText;
+    public TMP_Text ScoreText;
     public TMP_Text HighScoreText;
 
     [Header("Image")]
-    public Image LifeOne;
-    public Image LifeTwo;
-    public Image LifeThree; 
+    public Image[] LifeImages;
+    
 
 
     // Only 2 scenes in play for now so no need for a dedicated Singleton class that also destroys itself on scene change.
@@ -41,39 +41,43 @@ public class CanvasManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
         //creates and instance of the canvas manager.
         instance = this;
 
-        if (startButton)
+        if (StartButton)
         {
-            startButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
-            startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(1));
+            StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            StartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("Game"));
         }
             
 
-        if (gameOverQuitButton || pauseQuitButton)
+        if (GameOverQuitButton || PauseQuitButton)
         {
-            gameOverQuitButton.onClick.AddListener(Quit);
-            pauseQuitButton.onClick.AddListener(Quit);
+            GameOverQuitButton.onClick.AddListener(Quit);
+            PauseQuitButton.onClick.AddListener(Quit);
         }
 
-        if (mainMenuQuitButton)
-            mainMenuQuitButton.onClick.AddListener(Quit);
+        if (MainMenuQuitButton)
+            MainMenuQuitButton.onClick.AddListener(Quit);
 
-        if (playAgainButton)
+        if (PlayAgainButton)
         {
-            playAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
-            playAgainButton.onClick.AddListener(() => SetMenus(null, gameOverMenu));
+            PlayAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            PlayAgainButton.onClick.AddListener(() => SetMenus(null, GameOverMenu));
         }
            
 
-        if (resumeButton)
-            resumeButton.onClick.AddListener(() => SetMenus(null, pauseMenu));
+        if (ResumeButton)
+            ResumeButton.onClick.AddListener(() => SetMenus(null, PauseMenu));
 
-        if (mainMenuButton)
-            mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(0));
+        if (MainMenuButton)
+            MainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("Title"));
 
 
+        if(LifeImages.Length > 0)
+            UpdateLifeImage(GameManager.Instance.Lives);
     }
 
 
@@ -105,15 +109,15 @@ public class CanvasManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!pauseMenu) return;
+        if (!PauseMenu) return;
 
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            pauseMenu.SetActive(!pauseMenu.activeSelf);
+            PauseMenu.SetActive(!PauseMenu.activeSelf);
 
         }
-        if (pauseMenu.activeInHierarchy)
+        if (PauseMenu.activeInHierarchy)
         {
             Time.timeScale = 0;
         }
@@ -124,53 +128,13 @@ public class CanvasManager : MonoBehaviour
 
         if (GameManager.Instance.Lives == 0)
         {
-            gameOverMenu.SetActive(true);
+            GameOverMenu.SetActive(true);
         }
 
-        if (scoreText)
-            scoreText.text = GameManager.Instance.Score.ToString();
+        if (ScoreText)
+            ScoreText.text = GameManager.Instance.Score.ToString();
 
-
-        //sets lives images to the number of player lives.
-        float LivesImage = GameManager.Instance.Lives;
-
-        switch (LivesImage)
-        {
-            case 3:
-
-                LifeOne.enabled = true; 
-                LifeTwo.enabled = true; 
-                LifeThree.enabled = true;                
-                break;
-
-             case 2:
-
-                LifeTwo.enabled = true;
-                LifeOne.enabled = true;
-                LifeThree.enabled= false;
-                break;
-
-
-
-             case 1:
-
-                LifeOne.enabled = true;
-                LifeTwo.enabled = false;
-                LifeThree.enabled = false;
-
-                break;
-
-            case 0:
-
-                LifeOne.enabled = false;
-                LifeTwo.enabled= false;
-                LifeThree.enabled = false;
-                break;
-
-
-              default:
-              break;
-        }
+              
 
         //setting high-score text.
         if(HighScoreText)
@@ -179,8 +143,16 @@ public class CanvasManager : MonoBehaviour
         }
         
     }
-     
 
+    public void UpdateLifeImage(int lives)
+    {
+        for(int i = 0; i < LifeImages.Length; ++i)
+        {
+            Debug.Log("current index " + i.ToString() + "Current number of lives " + lives.ToString());
+            LifeImages[i].enabled = i < lives;
+        }
+        
+    }
 
 
 }

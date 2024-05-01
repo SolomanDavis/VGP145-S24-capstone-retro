@@ -409,7 +409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSpawnLocation: {fileID: 0}
   PlayerPrefab: {fileID: 0}
-  _score: 0
 --- !u!4 &326873322
 Transform:
   m_ObjectHideFlags: 0
@@ -1270,21 +1269,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7365f394b4a41143ae945ffcd2cb143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 0}
-  mainMenuQuitButton: {fileID: 0}
-  resumeButton: {fileID: 60988287}
-  playAgainButton: {fileID: 1514442869}
-  mainMenuButton: {fileID: 1901416472}
-  gameOverQuitButton: {fileID: 2081329889}
-  pauseQuitButton: {fileID: 1693131582}
-  mainMenu: {fileID: 0}
-  pauseMenu: {fileID: 1467985076}
-  gameOverMenu: {fileID: 1229614314}
-  scoreText: {fileID: 406210565}
+  StartButton: {fileID: 0}
+  MainMenuQuitButton: {fileID: 2081329889}
+  ResumeButton: {fileID: 60988287}
+  PlayAgainButton: {fileID: 1514442869}
+  MainMenuButton: {fileID: 1901416472}
+  GameOverQuitButton: {fileID: 2081329889}
+  PauseQuitButton: {fileID: 1693131582}
+  MainMenu: {fileID: 0}
+  PauseMenu: {fileID: 1467985076}
+  GameOverMenu: {fileID: 1229614314}
+  ScoreText: {fileID: 406210565}
   HighScoreText: {fileID: 150712129}
-  LifeOne: {fileID: 421126319}
-  LifeTwo: {fileID: 337521723}
-  LifeThree: {fileID: 1593980264}
+  LifeImages:
+  - {fileID: 421126319}
+  - {fileID: 337521723}
+  - {fileID: 1593980264}
 --- !u!1 &1046382916
 GameObject:
   m_ObjectHideFlags: 0

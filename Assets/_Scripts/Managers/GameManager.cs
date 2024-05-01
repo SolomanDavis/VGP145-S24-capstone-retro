@@ -10,9 +10,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public Transform PlayerSpawnLocation;
     [SerializeField] public GameObject PlayerPrefab;
 
-    private int _HighScore;
+    private int _highScore;
 
-    public int _score;
+    private int _score;
     public int Score => _score;
 
     private int _lives = 2;
@@ -25,8 +25,15 @@ public class GameManager : Singleton<GameManager>
 
         set
         {
+
+            Debug.Log("lives value and current lives "  + value.ToString() + " " + _lives.ToString());
+            //lost a life
             if (value >= 0 && value < _lives)
-            { SpawnPlayer(PlayerSpawnLocation); }
+            { 
+                //SpawnPlayer(PlayerSpawnLocation);
+                CanvasManager.Instance.UpdateLifeImage(value);
+
+            }
 
             else if (value < 0)
             { GameOver(); }
@@ -61,12 +68,12 @@ public class GameManager : Singleton<GameManager>
     //if score is > high-score sets high-score text with score and replaces previous high-score. 
     public int HighScore(int _score)
     {
-        if(_score > _HighScore) 
+        if(_score > _highScore) 
         {
-           _HighScore = _score;
+            _highScore = _score;
         }
 
-        return _HighScore;
+        return _highScore;
     }
 
     // Start is called before the first frame update
@@ -82,19 +89,23 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.LogWarning("No player spawn location set in GameManager");
         }
+
+        Debug.Log("Start current number of lives" + Lives.ToString());
+        //CanvasManager.Instance.UpdateLifeImage(Lives);
     }
 
     // When called in canvas manager it changes the scene. 
-    public void ChangeScene(int buildIndex)
+    public void ChangeScene(string SceneName)
     {
-        SceneManager.LoadScene(buildIndex);
+        SceneManager.LoadScene(SceneName);
     }
 
     //Resets score and lives to starting default.
     public void RestartGame()
     {
         _score = 0;
-        _lives = 2;
+        Lives = 2;
+        CanvasManager.Instance.UpdateLifeImage(Lives);
         // will also need to restart the enemy script. 
     }
 
@@ -112,15 +123,14 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-
-            _lives -= 1;
-            Debug.Log(_lives.ToString());
+            Lives -= 1;
+           // Debug.Log(_lives.ToString());
         }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
 
-            _score += 10;
+            AddToScore(10);
             Debug.Log(_lives.ToString());
         }
 
