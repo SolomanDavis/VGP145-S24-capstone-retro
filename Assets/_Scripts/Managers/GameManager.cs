@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,8 @@ public class GameManager : Singleton<GameManager>
     // Player spawn location and Player prefab
     [SerializeField] public Transform PlayerSpawnLocation;
     [SerializeField] public GameObject PlayerPrefab;
+
+    private bool _enemyManagerDestroyed = false;
 
     private int _highScore;
 
@@ -42,8 +45,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
-
     // Add score to be called when enemies are destroyed.
     public int AddToScore(int amountToAdd)
     {
@@ -76,6 +77,23 @@ public class GameManager : Singleton<GameManager>
         return _highScore;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // Register OnAllEnemiesKilled event handler
+        EnemyManager.Instance.AllEnemiesKilled += OnAllEnemiesKilled;
+    }
+
+    private void OnDisable()
+    {
+        // Unregister OnAllEnemiesKilled event handler on destroy
+        // EnemyManager.Instance.AllEnemiesKilled -= OnAllEnemiesKilled;
+
+        // TODO: ZA - doing the above will recreate the EnemyManager because it's a Singleton that can be destroyed
+        //            Need to verify that the EnemyManager is not destroyed before unregistering the event
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -89,6 +107,10 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.LogWarning("No player spawn location set in GameManager");
         }
+
+        // Start spawning enemies
+        // TODO: ZA - Decide when this should actually happen
+        EnemyManager.Instance.StartSpawningEnemies();
 
         Debug.Log("Start current number of lives" + Lives.ToString());
         //CanvasManager.Instance.UpdateLifeImage(Lives);
@@ -109,15 +131,6 @@ public class GameManager : Singleton<GameManager>
         // will also need to restart the enemy script. 
     }
 
-
-    // Update is called once per frame
-    //protected override void Update()
-    //{        
-    //}
-    // Not sure if we need it.
-
-
-
     //Added to test game over menu. 
     private void Update()
     {
@@ -133,9 +146,13 @@ public class GameManager : Singleton<GameManager>
             AddToScore(10);
             Debug.Log(_lives.ToString());
         }
-
     }
 
-
-
+    // Event handler for when all enemies are killed
+    private void OnAllEnemiesKilled()
+    {
+        // TODO: ZA - Replace with a win screen or level progression
+        Debug.Log("ZA - All enemies killed. Game over.");
+        GameOver();
+    }
 }
