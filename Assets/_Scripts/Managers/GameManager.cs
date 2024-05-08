@@ -22,7 +22,6 @@ public class GameManager : Singleton<GameManager>
 
         set
         {
-
             Debug.Log("lives value and current lives "  + value.ToString() + " " + _lives.ToString());
             //lost a life
             if (value >= 0 && value < _lives)
