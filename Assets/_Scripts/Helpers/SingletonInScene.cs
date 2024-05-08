@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 // This class is used to create a singleton that is destroyed when the scene changes.
@@ -38,7 +35,7 @@ public abstract class SingletonInScene<T> : MonoBehaviour where T : Component
             return;
         }
 
-        Destroy(gameObject);    
+        Destroy(gameObject);
     }
 
     // Start is called before the first frame update
@@ -48,7 +45,7 @@ public abstract class SingletonInScene<T> : MonoBehaviour where T : Component
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
     }

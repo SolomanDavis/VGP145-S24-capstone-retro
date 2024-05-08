@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -97,12 +93,7 @@ public class GameManager : Singleton<GameManager>
             Debug.LogWarning("No player spawn location set in GameManager");
         }
 
-        // Start spawning enemies
-        // TODO: ZA - Decide when this should actually happen
-        EnemyManager.Instance.StartSpawningEnemies();
-
-        Debug.Log("Start current number of lives" + Lives.ToString());
-        //CanvasManager.Instance.UpdateLifeImage(Lives);
+        RestartGame();
     }
 
     // When called in canvas manager it changes the scene. 
@@ -116,12 +107,13 @@ public class GameManager : Singleton<GameManager>
     {
         _score = 0;
         Lives = 2;
+
         CanvasManager.Instance.UpdateLifeImage(Lives);
-        // will also need to restart the enemy script. 
+        EnemyManager.Instance.Restart();
     }
 
     //Added to test game over menu. 
-    private void Update()
+    protected override void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -141,7 +133,6 @@ public class GameManager : Singleton<GameManager>
     private void OnAllEnemiesKilled()
     {
         // TODO: ZA - Replace with a win screen or level progression
-        Debug.Log("ZA - All enemies killed. Game over.");
         GameOver();
     }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
@@ -51,7 +48,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
     }
