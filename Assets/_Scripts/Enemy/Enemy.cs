@@ -23,9 +23,7 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>();
-
-        EnemyHealth = 2;
+        anim = GetComponent<Animator>();                
     }
 
 
