@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using System.Runtime.CompilerServices;
-using Unity.PlasticSCM.Editor.WebApi;
+using UnityEngine.UI;
 
 public class CanvasManager : SingletonInScene<CanvasManager>
 {
+    // Events for other game systems to listen to
+    public event UnityAction GamePaused; // Other game systems should pause their activities if applicable
+    public event UnityAction GameUnpaused; // Other game systems should resume their activities if applicable
+
     [Header("Button")]
     public Button StartButton;
     public Button MainMenuQuitButton;
@@ -36,10 +37,10 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     {
         if (StartButton)
         {
-            StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
-            StartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("Game"));
+            // Load game scene
+            // Note: Need to explicitly load the scene as we don't want to start a new game instance in the current title scene
+            StartButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Game"));
         }
-            
 
         if (GameOverQuitButton || PauseQuitButton)
         {
@@ -52,18 +53,19 @@ public class CanvasManager : SingletonInScene<CanvasManager>
 
         if (PlayAgainButton)
         {
-            PlayAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
             PlayAgainButton.onClick.AddListener(() => SetMenus(null, GameOverMenu));
+            PlayAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
-           
 
         if (ResumeButton)
+        {
             ResumeButton.onClick.AddListener(() => SetMenus(null, PauseMenu));
+            ResumeButton.onClick.AddListener(() => GameUnpaused?.Invoke());
+        }
 
         if (MainMenuButton)
             MainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("Title"));
-
-
+ 
         if (LifeImages.Length > 0)
             UpdateLifeImage(GameManager.Instance.Lives);
     }
@@ -88,10 +90,8 @@ public class CanvasManager : SingletonInScene<CanvasManager>
 #endif
     }
 
-
-
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         if (!PauseMenu) return;
 
@@ -99,6 +99,11 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         {
             PauseMenu.SetActive(!PauseMenu.activeSelf);
 
+            // Trigger event for other game systems to pause
+            if (PauseMenu.activeSelf)
+                GamePaused?.Invoke();
+            else
+                GameUnpaused?.Invoke();
         }
 
         if (PauseMenu.activeInHierarchy)
@@ -121,7 +126,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         }
 
         //setting high-score text.
-        if(HighScoreText)
+        if (HighScoreText)
         {
             HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
         }
@@ -131,7 +136,6 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     {
         for(int i = 0; i < LifeImages.Length; ++i)
         {
-            Debug.Log("current index " + i.ToString() + "Current number of lives " + lives.ToString());
             LifeImages[i].enabled = i < lives;
         }
     }

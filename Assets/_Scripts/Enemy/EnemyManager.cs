@@ -37,14 +37,17 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     // Flag to indicate if the enemy manager is currently spawning enemies
     private bool _isSpawning = false;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    // Awake is called when the script instance is being loaded
+    protected override void Awake()
     {
         if (totalEnemies == 0)
             Debug.LogError("[EnemyManager] Total number of enemies to spawn is set to 0.");
 
         if (minEnemiesPerSquad == 0 || maxEnemiesPerSquad == 0 || maxEnemiesPerSquad > totalEnemies)
             Debug.LogError("[EnemyManager] Min or max number of enemies per squad is set to invalid value.");
+
+        if (enemySpawnInfos.Length == 0)
+            Debug.LogError("[EnemyManager] No enemy spawn infos set.");
 
         if (enemySpawnLocations.Length == 0)
             Debug.LogError("[EnemyManager] No enemy spawn locations set.");
@@ -66,6 +69,10 @@ public class EnemyManager : SingletonInScene<EnemyManager>
 
         if (distributionSum != totalEnemies)
             Debug.LogError("[EnemyManager] Enemy type distribution does not match total number of enemies to spawn.");
+
+        // Subscribe to CanvasManager events
+        CanvasManager.Instance.GamePaused += () => _isSpawning = false; // Pause the enemy manager
+        CanvasManager.Instance.GameUnpaused += () => _isSpawning = true; // Unpause the enemy manager
     }
 
     // Restart resets the enemy manager to its initial state
@@ -80,7 +87,7 @@ public class EnemyManager : SingletonInScene<EnemyManager>
 
         // Reset fields
         _timeSinceLastSquadSpawned = 0f;
-        _isSpawning = false;
+        _isSpawning = true;
 
         // Reset statistics
         _enemiesSpawned = 0;
@@ -171,13 +178,7 @@ public class EnemyManager : SingletonInScene<EnemyManager>
         return false;
     }
 
-    public void StartSpawningEnemies()
-    {
-        Debug.Log("ZA - StartSpawningEnemies");
-        _isSpawning = true;
-    }
-
-    public void Update()
+    protected override void Update()
     {
         // Trigger the coroutine to spawn a squad of enemies if we have not reached the total number of enemies to spawn
         // and an interval has passed since the last squad was spawned.
