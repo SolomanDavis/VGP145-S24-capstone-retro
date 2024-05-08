@@ -10,21 +10,21 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     public event UnityAction AllEnemiesKilled; // All have been spawned and all enemies have been killed
 
     // Numbers of enemies total and in squad to spawn in the game
-    [SerializeField] public int TotalEnemies = 36;
-    [SerializeField] public int MinEnemiesPerSquad = 4;
-    [SerializeField] public int MaxEnemiesPerSquad = 8;
+    [SerializeField] private int totalEnemies = 36;
+    [SerializeField] private int minEnemiesPerSquad = 4;
+    [SerializeField] private int maxEnemiesPerSquad = 8;
 
     // Time between spawning enemy squads
-    [SerializeField] public float MinTimeBetweenSquads = 10f;
-    [SerializeField] public float MaxTimeBetweenSquads = 20f;
+    [SerializeField] private float minTimeBetweenSquads = 10f;
+    [SerializeField] private float maxTimeBetweenSquads = 20f;
 
     // Enemy spawn info including spawning distribution of enemy types in the game
-    [SerializeField] public EnemySpawnInfo[] EnemySpawnInfos;
+    [SerializeField] private EnemySpawnInfo[] enemySpawnInfos;
     private int[] _enemyDistributions;
 
     // TODO: ZA - replace with actual spawn locations
     // List of possible spawn locations for enemy squads
-    [SerializeField] public Transform[] EnemySpawnLocations;
+    [SerializeField] private Transform[] enemySpawnLocations;
 
     // Time since the last squad of enemies was spawned
     private float _timeSinceLastSquadSpawned = 0f;
@@ -40,51 +40,71 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     // Start is called before the first frame update
     protected override void Start()
     {
-        if (TotalEnemies == 0)
+        if (totalEnemies == 0)
             Debug.LogError("[EnemyManager] Total number of enemies to spawn is set to 0.");
 
-        if (MinEnemiesPerSquad == 0 || MaxEnemiesPerSquad == 0 || MaxEnemiesPerSquad > TotalEnemies)
+        if (minEnemiesPerSquad == 0 || maxEnemiesPerSquad == 0 || maxEnemiesPerSquad > totalEnemies)
             Debug.LogError("[EnemyManager] Min or max number of enemies per squad is set to invalid value.");
 
-        if (EnemySpawnLocations.Length == 0)
+        if (enemySpawnLocations.Length == 0)
             Debug.LogError("[EnemyManager] No enemy spawn locations set.");
 
         // Verify spawn info is set correctly
         int distributionSum = 0;
-        _enemyDistributions = new int[EnemySpawnInfos.Length];
-        for (int i = 0; i < EnemySpawnInfos.Length; i++)
+        _enemyDistributions = new int[enemySpawnInfos.Length];
+        for (int i = 0; i < enemySpawnInfos.Length; ++i)
         {
-            if (EnemySpawnInfos[i].Prefab == null)
+            if (enemySpawnInfos[i].Prefab == null)
                 Debug.LogError("[EnemyManager] Enemy prefab not set for spawn info.");
 
-            if (EnemySpawnInfos[i].DistributionValue <= 0)
+            if (enemySpawnInfos[i].DistributionValue <= 0)
                 Debug.LogError("[EnemyManager] Invalid enemy spawn distribution value set.");
 
-            _enemyDistributions[i] = EnemySpawnInfos[i].DistributionValue; // Initialize enemy spawn distributions array
+            _enemyDistributions[i] = enemySpawnInfos[i].DistributionValue; // Initialize enemy spawn distributions array
             distributionSum += _enemyDistributions[i];
         }
 
-        if (distributionSum != TotalEnemies)
+        if (distributionSum != totalEnemies)
             Debug.LogError("[EnemyManager] Enemy type distribution does not match total number of enemies to spawn.");
+    }
+
+    // Restart resets the enemy manager to its initial state
+    public void Restart()
+    {
+        // Reset enemy distributions
+        _enemyDistributions = new int[enemySpawnInfos.Length];
+        for (int i = 0; i < enemySpawnInfos.Length; ++i)
+        {
+            _enemyDistributions[i] = enemySpawnInfos[i].DistributionValue;
+        }
+
+        // Reset fields
+        _timeSinceLastSquadSpawned = 0f;
+        _isSpawning = false;
+
+        // Reset statistics
+        _enemiesSpawned = 0;
+        _enemiesAlive = 0;
+        _enemiesKilled = 0;
     }
 
     public void SpawnEnemies()
     {
         // Choose a random spawn location for the squad
-        Transform spawnLocation = EnemySpawnLocations[Random.Range(0, EnemySpawnLocations.Length)];
+        Transform spawnLocation = enemySpawnLocations[Random.Range(0, enemySpawnLocations.Length)];
 
         // Choose a random number of enemies to spawn in the squad, accounting for the number of enemies left to spawn
-        int maxEnemiesLeft = TotalEnemies - _enemiesSpawned;
+        int maxEnemiesLeft = totalEnemies - _enemiesSpawned;
         if (maxEnemiesLeft == 0)
             return;
 
-        int numberOfEnemiesToSpawn = Mathf.Min(maxEnemiesLeft, Random.Range(MinEnemiesPerSquad, MaxEnemiesPerSquad));
+        int numberOfEnemiesToSpawn = Mathf.Min(maxEnemiesLeft, Random.Range(minEnemiesPerSquad, maxEnemiesPerSquad));
 
         // Based on the enemy type distribution remaining, spawn the enemies in the squad
         for (int i = 0; i < numberOfEnemiesToSpawn; i++)
         {
             EnemySpawnInfo chosenInfo;
-            if (!ChooseEnemyToSpawn(EnemySpawnInfos, _enemyDistributions, out chosenInfo))
+            if (!ChooseEnemyToSpawn(enemySpawnInfos, _enemyDistributions, out chosenInfo))
             {
                 // If no enemies left to spawn, stop spawning
                 _isSpawning = false;
@@ -99,10 +119,10 @@ public class EnemyManager : SingletonInScene<EnemyManager>
             // Update stats
             _enemiesSpawned++;
             _enemiesAlive++;
-            _enemyDistributions[Array.IndexOf(EnemySpawnInfos, chosenInfo)]--; // Decrement the distribution value of the chosen enemy type
+            _enemyDistributions[Array.IndexOf(enemySpawnInfos, chosenInfo)]--; // Decrement the distribution value of the chosen enemy type
 
             // If all enemies have been spawned, raise the AllEnemiesSpawned event
-            if (_enemiesSpawned == TotalEnemies)
+            if (_enemiesSpawned == totalEnemies)
             {
                 AllEnemiesSpawned?.Invoke();
             }
@@ -180,12 +200,12 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     private bool IsAbleToSpawn()
     {
         return _isSpawning
-            && _enemiesSpawned < TotalEnemies
-            && _timeSinceLastSquadSpawned > Random.Range(MinTimeBetweenSquads, MaxTimeBetweenSquads);
+            && _enemiesSpawned < totalEnemies
+            && _timeSinceLastSquadSpawned > Random.Range(minTimeBetweenSquads, maxTimeBetweenSquads);
     }
 
     private bool IsAllEnemiesKilled()
     {
-        return _enemiesSpawned == TotalEnemies && _enemiesKilled == TotalEnemies;
+        return _enemiesSpawned == totalEnemies && _enemiesKilled == totalEnemies;
     }
 }

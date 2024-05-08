@@ -11,8 +11,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public Transform PlayerSpawnLocation;
     [SerializeField] public GameObject PlayerPrefab;
 
-    private bool _enemyManagerDestroyed = false;
-
     private int _highScore;
 
     private int _score;
@@ -83,15 +81,6 @@ public class GameManager : Singleton<GameManager>
 
         // Register OnAllEnemiesKilled event handler
         EnemyManager.Instance.AllEnemiesKilled += OnAllEnemiesKilled;
-    }
-
-    private void OnDisable()
-    {
-        // Unregister OnAllEnemiesKilled event handler on destroy
-        // EnemyManager.Instance.AllEnemiesKilled -= OnAllEnemiesKilled;
-
-        // TODO: ZA - doing the above will recreate the EnemyManager because it's a Singleton that can be destroyed
-        //            Need to verify that the EnemyManager is not destroyed before unregistering the event
     }
 
     // Start is called before the first frame update

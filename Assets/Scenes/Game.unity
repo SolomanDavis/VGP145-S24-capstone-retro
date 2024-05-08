@@ -2180,17 +2180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecae19568bd9c424e9b481f993556f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TotalEnemies: 36
-  MinEnemiesPerSquad: 4
-  MaxEnemiesPerSquad: 8
-  MinTimeBetweenSquads: 10
-  MaxTimeBetweenSquads: 20
-  EnemySpawnInfos:
-  - {fileID: 11400000, guid: 1ef9ff271578bec438186982c8dadd11, type: 2}
-  - {fileID: 11400000, guid: 08f6d86ac6a644842812e9acc128c568, type: 2}
-  - {fileID: 11400000, guid: 4437d55dd4cd6bf41bbbcdcabcf4c775, type: 2}
-  EnemySpawnLocations:
-  - {fileID: 732154223}
+  totalEnemies: 36
+  minEnemiesPerSquad: 4
+  maxEnemiesPerSquad: 8
+  minTimeBetweenSquads: 10
+  maxTimeBetweenSquads: 20
+  enemySpawnInfos: []
+  enemySpawnLocations: []
 --- !u!1 &1693131580
 GameObject:
   m_ObjectHideFlags: 0
