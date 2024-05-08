@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using Unity.PlasticSCM.Editor.WebApi;
 
-public class CanvasManager : MonoBehaviour
+public class CanvasManager : SingletonInScene<CanvasManager>
 {
     [Header("Button")]
     public Button StartButton;
@@ -31,21 +31,9 @@ public class CanvasManager : MonoBehaviour
     [Header("Image")]
     public Image[] LifeImages;
     
-
-
-    // Only 2 scenes in play for now so no need for a dedicated Singleton class that also destroys itself on scene change.
-    // If more scenes are added, a dedicated Singleton class that also destroys itself on scene change will be needed.
-    static CanvasManager instance = null;
-    public static CanvasManager Instance => instance;
-
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-
-        
-        //creates and instance of the canvas manager.
-        instance = this;
-
         if (StartButton)
         {
             StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
@@ -76,11 +64,9 @@ public class CanvasManager : MonoBehaviour
             MainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("Title"));
 
 
-        if(LifeImages.Length > 0)
+        if (LifeImages.Length > 0)
             UpdateLifeImage(GameManager.Instance.Lives);
     }
-
-
 
     //Sets menus from active to inactive.
     void SetMenus(GameObject menuToActive, GameObject menuToInactive)
@@ -92,15 +78,13 @@ public class CanvasManager : MonoBehaviour
             menuToInactive.SetActive(false);
     }
 
-
-
     //Quits the game and stops playing in unity.
     private void Quit()
     {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
     }
 
@@ -111,12 +95,12 @@ public class CanvasManager : MonoBehaviour
     {
         if (!PauseMenu) return;
 
-
         if (Input.GetKeyDown(KeyCode.P))
         {
             PauseMenu.SetActive(!PauseMenu.activeSelf);
 
         }
+
         if (PauseMenu.activeInHierarchy)
         {
             Time.timeScale = 0;
@@ -132,16 +116,15 @@ public class CanvasManager : MonoBehaviour
         }
 
         if (ScoreText)
+        {
             ScoreText.text = GameManager.Instance.Score.ToString();
-
-              
+        }
 
         //setting high-score text.
         if(HighScoreText)
         {
             HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
         }
-        
     }
 
     public void UpdateLifeImage(int lives)
@@ -151,8 +134,5 @@ public class CanvasManager : MonoBehaviour
             Debug.Log("current index " + i.ToString() + "Current number of lives " + lives.ToString());
             LifeImages[i].enabled = i < lives;
         }
-        
     }
-
-
 }
