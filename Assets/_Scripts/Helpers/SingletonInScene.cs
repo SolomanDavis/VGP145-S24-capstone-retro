@@ -1,10 +1,9 @@
 using UnityEngine;
 
+// This class is used to create a singleton that is destroyed when the scene changes.
 [DefaultExecutionOrder(-1)]
-public abstract class Singleton<T> : MonoBehaviour where T : Component
+public abstract class SingletonInScene<T> : MonoBehaviour where T : Component
 {
-    // Die word geroep uit die perspektief van iets anders ( GameManager.Instance )
-    // Dit will sê iets anders roep die GameManager bv die playerController, dus die gameManager.Instance
     static T instance;
     public static T Instance
     {
@@ -18,15 +17,14 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
                 GameObject obj = new GameObject(); 
                 obj.name = typeof(T).Name;
                 instance = obj.AddComponent<T>();
-                DontDestroyOnLoad(obj);
+
+                // Explicity do not call DontDestroyOnLoad(obj);
+                // In this class, we want to destroy this singleton when the scene changes.
             }
 
             return instance;
         }
     }
-
-    // VS die wat uit die perspektief geroep word van die uit die Singleton script. 
-    /// Met ander woorde: die GameManager se **Awake** word geroep
 
     // Awake = Pre -start ( gebeur voor start)
     protected virtual void Awake()
@@ -34,11 +32,10 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
         if (!instance)
         {
             instance = this as T;
-            DontDestroyOnLoad(gameObject);
             return;
         }
 
-        Destroy(gameObject);    
+        Destroy(gameObject);
     }
 
     // Start is called before the first frame update
