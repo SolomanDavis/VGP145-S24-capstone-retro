@@ -535,7 +535,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_33
+      name: HeavyEnemy_Green Down1
       rect:
         serializedVersion: 2
         x: 8
@@ -556,7 +556,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_34
+      name: HeavyEnemy_Green Down2
       rect:
         serializedVersion: 2
         x: 32
@@ -577,7 +577,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_35
+      name: HeavyEnemy_ Green Turn1
       rect:
         serializedVersion: 2
         x: 57
@@ -598,7 +598,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_36
+      name: HeavyEnemy_ Green Turn2
       rect:
         serializedVersion: 2
         x: 81
@@ -619,7 +619,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_37
+      name: HeavyEnemy_ Green Turn3
       rect:
         serializedVersion: 2
         x: 105
@@ -640,7 +640,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_38
+      name: HeavyEnemy_ Green Turn4
       rect:
         serializedVersion: 2
         x: 128
@@ -661,7 +661,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_39
+      name: HeavyEnemy_ Green Turn5
       rect:
         serializedVersion: 2
         x: 152
@@ -682,7 +682,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_40
+      name: HeavyEnemy_ Green Turn6
       rect:
         serializedVersion: 2
         x: 176
@@ -703,7 +703,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_41
+      name: HeavyEnemy_Purple Down1
       rect:
         serializedVersion: 2
         x: 8
@@ -724,7 +724,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_42
+      name: HeavyEnemy_Purple Down2
       rect:
         serializedVersion: 2
         x: 32
@@ -745,7 +745,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_43
+      name: HeavyEnemy_Purple Turn1
       rect:
         serializedVersion: 2
         x: 57
@@ -766,7 +766,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_44
+      name: HeavyEnemy_Purple Turn2
       rect:
         serializedVersion: 2
         x: 81
@@ -787,7 +787,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_45
+      name: HeavyEnemy_Purple Turn3
       rect:
         serializedVersion: 2
         x: 105
@@ -808,7 +808,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_46
+      name: HeavyEnemy_Purple Turn4
       rect:
         serializedVersion: 2
         x: 128
@@ -829,7 +829,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_47
+      name: HeavyEnemy_Purple Turn5
       rect:
         serializedVersion: 2
         x: 152
@@ -850,7 +850,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_48
+      name: HeavyEnemy_Purple Turn6
       rect:
         serializedVersion: 2
         x: 176
@@ -1606,7 +1606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_91
+      name: EnemyDteah1
       rect:
         serializedVersion: 2
         x: 202
@@ -1627,7 +1627,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_92
+      name: EnemyDteah2
       rect:
         serializedVersion: 2
         x: 224
@@ -1648,7 +1648,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_95
+      name: EnemyDteah3
       rect:
         serializedVersion: 2
         x: 249
@@ -1669,7 +1669,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_96
+      name: EnemyDteah4
       rect:
         serializedVersion: 2
         x: 289
@@ -2393,6 +2393,26 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      EnemyDteah1: 51262924
+      EnemyDteah2: 316887352
+      EnemyDteah3: -503866028
+      EnemyDteah4: 1935236751
+      HeavyEnemy_ Green Turn1: 1814580402
+      HeavyEnemy_ Green Turn2: -1421753048
+      HeavyEnemy_ Green Turn3: -1948881254
+      HeavyEnemy_ Green Turn4: 1080165682
+      HeavyEnemy_ Green Turn5: -1782010323
+      HeavyEnemy_ Green Turn6: 562967403
+      HeavyEnemy_Green Down1: 179000836
+      HeavyEnemy_Green Down2: -2035844433
+      HeavyEnemy_Purple Down1: -56245761
+      HeavyEnemy_Purple Down2: 485181595
+      HeavyEnemy_Purple Turn1: -981760607
+      HeavyEnemy_Purple Turn2: -1937926382
+      HeavyEnemy_Purple Turn3: 21586141
+      HeavyEnemy_Purple Turn4: 686859360
+      HeavyEnemy_Purple Turn5: -267028562
+      HeavyEnemy_Purple Turn6: -1416582526
       Player: 102847094
       Projectile: 673985216
       image_2024-04-18_152227724-removebg-preview_0: -374349775
@@ -2454,23 +2474,7 @@ TextureImporter:
       image_2024-04-18_152227724-removebg-preview_30: -183027082
       image_2024-04-18_152227724-removebg-preview_31: -1639832508
       image_2024-04-18_152227724-removebg-preview_32: 1386234340
-      image_2024-04-18_152227724-removebg-preview_33: 179000836
-      image_2024-04-18_152227724-removebg-preview_34: -2035844433
-      image_2024-04-18_152227724-removebg-preview_35: 1814580402
-      image_2024-04-18_152227724-removebg-preview_36: -1421753048
-      image_2024-04-18_152227724-removebg-preview_37: -1948881254
-      image_2024-04-18_152227724-removebg-preview_38: 1080165682
-      image_2024-04-18_152227724-removebg-preview_39: -1782010323
       image_2024-04-18_152227724-removebg-preview_4: 525477389
-      image_2024-04-18_152227724-removebg-preview_40: 562967403
-      image_2024-04-18_152227724-removebg-preview_41: -56245761
-      image_2024-04-18_152227724-removebg-preview_42: 485181595
-      image_2024-04-18_152227724-removebg-preview_43: -981760607
-      image_2024-04-18_152227724-removebg-preview_44: -1937926382
-      image_2024-04-18_152227724-removebg-preview_45: 21586141
-      image_2024-04-18_152227724-removebg-preview_46: 686859360
-      image_2024-04-18_152227724-removebg-preview_47: -267028562
-      image_2024-04-18_152227724-removebg-preview_48: -1416582526
       image_2024-04-18_152227724-removebg-preview_49: -1179914753
       image_2024-04-18_152227724-removebg-preview_5: 1515908803
       image_2024-04-18_152227724-removebg-preview_50: -112738501
@@ -2516,12 +2520,8 @@ TextureImporter:
       image_2024-04-18_152227724-removebg-preview_89: 665763071
       image_2024-04-18_152227724-removebg-preview_9: -1875807136
       image_2024-04-18_152227724-removebg-preview_90: 1221773351
-      image_2024-04-18_152227724-removebg-preview_91: 51262924
-      image_2024-04-18_152227724-removebg-preview_92: 316887352
       image_2024-04-18_152227724-removebg-preview_93: -29489045
       image_2024-04-18_152227724-removebg-preview_94: -1607802126
-      image_2024-04-18_152227724-removebg-preview_95: -503866028
-      image_2024-04-18_152227724-removebg-preview_96: 1935236751
       image_2024-04-18_152227724-removebg-preview_97: -1303362471
       image_2024-04-18_152227724-removebg-preview_98: -337839436
       image_2024-04-18_152227724-removebg-preview_99: 923554307
