@@ -38,21 +38,20 @@ public class HeavyEnemy : Enemy
         {
             _numberOfHits++;
             TakeDamage(1);
-            HeavyEnemyHealth();
+            UpdateHealthStatus();
         }
     }
 
     // Tracks _numberOfHits and calls the heavy enemy's ChangeColor().
-    private void HeavyEnemyHealth()
+    private void UpdateHealthStatus()
     {
         if (_numberOfHits == 1)
-        { ChangeColor(); }
+        {
+            anim.SetInteger("NumberOfHits", _numberOfHits);
+        }
 
     }
-
-    // Uses _numberOfHits change the animations in animator.
-    private void ChangeColor()
-    { anim.SetInteger("NumberOfHits", _numberOfHits); }
+    
 
 }
 
