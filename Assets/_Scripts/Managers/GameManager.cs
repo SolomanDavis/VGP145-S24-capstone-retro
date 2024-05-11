@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         // Function to be completed
-        
+        CanvasManager.Instance.GameOver();
         Debug.Log("GameOver");
     }
 

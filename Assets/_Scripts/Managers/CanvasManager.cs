@@ -120,22 +120,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         else
         {
             Time.timeScale = 1;
-        }
-
-        if (GameManager.Instance.Lives == 0)
-        {
-            EndGameMenu.SetActive(true);
-            WinText.enabled = false;
-            GameOverText.enabled = true;
-        }
-
-        //Used to test the the text is setting properly, delete when no longer needed. 
-        //if(GameManager.Instance.Score == 20)
-        //{
-        //    EndGameMenu.SetActive(true);
-        //    GameOverText.enabled = false;
-        //    WinText.enabled = true;
-        //}
+        }       
 
         if (ScoreText)
         {
@@ -154,8 +139,15 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     {
         EndGameMenu.SetActive(true);
         GameOverText.enabled = false;
+        WinText.enabled = true;
     }
 
+    public void GameOver()
+    {
+        EndGameMenu.SetActive(true);
+        WinText.enabled = false;
+        GameOverText.enabled = true;
+    }
 
     public void UpdateLifeImage(int lives)
     {
