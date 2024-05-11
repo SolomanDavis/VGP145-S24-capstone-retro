@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,7 +22,6 @@ public class GameManager : Singleton<GameManager>
 
         set
         {
-
             Debug.Log("lives value and current lives "  + value.ToString() + " " + _lives.ToString());
             //lost a life
             if (value >= 0 && value < _lives)
@@ -41,8 +37,6 @@ public class GameManager : Singleton<GameManager>
             _lives = value;
         }
     }
-
-
 
     // Add score to be called when enemies are destroyed.
     public int AddToScore(int amountToAdd)
@@ -76,6 +70,14 @@ public class GameManager : Singleton<GameManager>
         return _highScore;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // Register OnAllEnemiesKilled event handler
+        EnemyManager.Instance.AllEnemiesKilled += OnAllEnemiesKilled;
+    }
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -90,8 +92,7 @@ public class GameManager : Singleton<GameManager>
             Debug.LogWarning("No player spawn location set in GameManager");
         }
 
-        Debug.Log("Start current number of lives" + Lives.ToString());
-        //CanvasManager.Instance.UpdateLifeImage(Lives);
+        RestartGame();
     }
 
     // When called in canvas manager it changes the scene. 
@@ -105,21 +106,13 @@ public class GameManager : Singleton<GameManager>
     {
         _score = 0;
         Lives = 2;
+
         CanvasManager.Instance.UpdateLifeImage(Lives);
-        // will also need to restart the enemy script. 
+        EnemyManager.Instance.Restart();
     }
 
-
-    // Update is called once per frame
-    //protected override void Update()
-    //{        
-    //}
-    // Not sure if we need it.
-
-
-
     //Added to test game over menu. 
-    private void Update()
+    protected override void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -133,9 +126,12 @@ public class GameManager : Singleton<GameManager>
             AddToScore(10);
             Debug.Log(_lives.ToString());
         }
-
     }
 
-
-
+    // Event handler for when all enemies are killed
+    private void OnAllEnemiesKilled()
+    {
+        // TODO: ZA - Replace with a win screen or level progression
+        GameOver();
+    }
 }

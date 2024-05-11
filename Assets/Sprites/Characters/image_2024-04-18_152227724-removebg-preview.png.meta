@@ -119,6 +119,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1257,7 +1270,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_75
+      name: Projectile
       rect:
         serializedVersion: 2
         x: 202
@@ -2381,6 +2394,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Player: 102847094
+      Projectile: 673985216
       image_2024-04-18_152227724-removebg-preview_0: -374349775
       image_2024-04-18_152227724-removebg-preview_1: -1432263687
       image_2024-04-18_152227724-removebg-preview_10: -974546385
@@ -2485,7 +2499,6 @@ TextureImporter:
       image_2024-04-18_152227724-removebg-preview_72: 1988113675
       image_2024-04-18_152227724-removebg-preview_73: -2062524697
       image_2024-04-18_152227724-removebg-preview_74: 970874609
-      image_2024-04-18_152227724-removebg-preview_75: 673985216
       image_2024-04-18_152227724-removebg-preview_76: 1444964122
       image_2024-04-18_152227724-removebg-preview_77: -1620651176
       image_2024-04-18_152227724-removebg-preview_78: 1157090993
