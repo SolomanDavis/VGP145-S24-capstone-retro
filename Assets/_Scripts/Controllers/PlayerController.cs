@@ -8,7 +8,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f; // Speed of player movement
-    [SerializeField] private float deathAnimationDuration = 1.5f; // Duration of death animation in seconds
     private Animator animator;
 
     private void Start()
@@ -27,17 +26,16 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
     }
 
+
+    //Player Destruction
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyProjectile"))
         {
-            //GameManager.Instance.Lives--;
+            GameManager.Instance.Lives--;
 
-            // Play death animation
+            
             animator.SetTrigger("Die");
-
-            // Destroy the GameObject after the death animation finishes
-            StartCoroutine(DestroyAfterAnimation());
         }
     }
 
@@ -45,22 +43,16 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //GameManager.Instance.Lives--;
+            GameManager.Instance.Lives--;
 
             animator.SetTrigger("Die");
-
-            // Destroy the GameObject after the death animation finishes
-            StartCoroutine(DestroyAfterAnimation());
         }
     }
 
 
     // Coroutine to destroy the GameObject after the death animation finishes
-    private IEnumerator DestroyAfterAnimation()
+    public void PlayerDeath()
     {
-        // Wait for the specified duration or the length of the death animation, whichever is greater
-        yield return new WaitForSeconds(Mathf.Max(deathAnimationDuration, animator.GetCurrentAnimatorStateInfo(0).length));
-
         // Destroy the GameObject
         Destroy(gameObject);
     }
