@@ -23,11 +23,15 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     [Header("Menus")]
     public GameObject MainMenu;
     public GameObject PauseMenu;
-    public GameObject GameOverMenu;
+    public GameObject EndGameMenu;
+   
 
     [Header("Text")]
     public TMP_Text ScoreText;
     public TMP_Text HighScoreText;
+    public TMP_Text GameOverText;
+    public TMP_Text WinText;
+   
 
     [Header("Image")]
     public Image[] LifeImages;
@@ -40,6 +44,9 @@ public class CanvasManager : SingletonInScene<CanvasManager>
             // Load game scene
             // Note: Need to explicitly load the scene as we don't want to start a new game instance in the current title scene
             StartButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Game"));
+
+            // This needs to be here so that when the game ends and the player returns to the main menu, then presses start again, the game is set back to the beginning. 
+            StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
 
         if (GameOverQuitButton || PauseQuitButton)
@@ -53,7 +60,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
 
         if (PlayAgainButton)
         {
-            PlayAgainButton.onClick.AddListener(() => SetMenus(null, GameOverMenu));
+            PlayAgainButton.onClick.AddListener(() => SetMenus(null, EndGameMenu));
             PlayAgainButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
 
@@ -113,12 +120,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         else
         {
             Time.timeScale = 1;
-        }
-
-        if (GameManager.Instance.Lives == 0)
-        {
-            GameOverMenu.SetActive(true);
-        }
+        }       
 
         if (ScoreText)
         {
@@ -130,6 +132,21 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         {
             HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
         }
+    }
+
+    //Enables end game screen and displays the Winner text.
+    public void GameWon()
+    {
+        EndGameMenu.SetActive(true);
+        GameOverText.enabled = false;
+        WinText.enabled = true;
+    }
+
+    public void GameOver()
+    {
+        EndGameMenu.SetActive(true);
+        WinText.enabled = false;
+        GameOverText.enabled = true;
     }
 
     public void UpdateLifeImage(int lives)
