@@ -80,7 +80,7 @@ public abstract class Enemy : MonoBehaviour
 
 
     
-    public void IsLookingDown()
+    public bool IsLookingDown()
     {
         Vector3 upVector = transform.position - Vector3.up;
         //upVector.Normalize();
@@ -92,14 +92,7 @@ public abstract class Enemy : MonoBehaviour
         float angle = Vector3.Angle(transform.up, upVector);
         Debug.Log("Angle: " + angle);
 
-        if (angle <= maxAngle)
-        {
-            
-        }
-        else
-        {
-            
-        }
+        return angle <= maxAngle;
     }
 
 }
