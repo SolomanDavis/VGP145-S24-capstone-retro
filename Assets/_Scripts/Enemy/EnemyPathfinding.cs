@@ -26,14 +26,19 @@ public class EnemyPathfinding : MonoBehaviour
         Hover,
         Dive,
     }
-    [SerializeField] private PathfindingState _state = PathfindingState.Hover;
+    [SerializeField] private PathfindingState _state = PathfindingState.Entrance; // Starting state: Entrance
 
     // Start is called before the first frame update
     void Start()
     {
-        // TODO: ZA - Estelle - DEBUG - Replace with actual rank grid slots
+        // TODO: ZA - Estelle - Replace with actual rank grid slots
         HoverLocation = new GameObject().transform;
         HoverLocation.position = Vector3.zero;
+
+        if (SplineContainer == null)
+        {
+            SplineContainer = FindObjectOfType<SplineContainer>();
+        }
     }
 
     // ChoosePath sets the path index for the enemy to follow
@@ -91,6 +96,8 @@ public class EnemyPathfinding : MonoBehaviour
         transform.up = newDirection;
     }
 
+    // CalculateEntrancePath calculates the next position and direction for the enemy in an Entrance state
+    // The enemy will move along the chosen path until it reaches the end of the path
     private void CalculateEntrancePath(out Vector3 position, out Vector3 direction)   
     {
         // Calculate current interpolation factor along path
@@ -111,6 +118,8 @@ public class EnemyPathfinding : MonoBehaviour
         direction = splineTransformMatrix.MultiplyVector(forwardDirection).normalized;
     }
 
+    // CalculateHoverPath calculates the next position and direction for the enemy in a Hover state
+    // The enemy will move towards the hover location and then hover in place, sticking to the assigned hover location
     private void CalculateHoverPath(out Vector3 position, out Vector3 direction)
     {
         // Calculate current interpolation factor along path
@@ -129,6 +138,8 @@ public class EnemyPathfinding : MonoBehaviour
         }
     }
 
+    // CalculateDivePath calculates the next position and direction for the enemy in a Dive state
+    // TODO: to be implemented
     private void CalculateDivePath(out Vector3 position, out Vector3 direction)
     {
         position = Vector3.zero;

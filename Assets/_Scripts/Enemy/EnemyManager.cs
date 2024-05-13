@@ -22,7 +22,6 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     [SerializeField] private EnemySpawnInfo[] enemySpawnInfos;
     private int[] _enemyDistributions;
 
-    // TODO: ZA - replace with actual spawn locations
     // List of possible spawn locations for enemy squads
     [SerializeField] private Transform[] enemySpawnLocations;
 
@@ -125,6 +124,7 @@ public class EnemyManager : SingletonInScene<EnemyManager>
             
             // Attaches handler to EnemyKilled event
             enemy.EnemyKilled += _onEnemyKilled;
+
             // TODO: ZA - debugging purposes
             Debug.Log("ZA - spawned enemy of Prefab type: " + chosenInfo.Prefab.name);
 
