@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
 
+    public event UnityAction EnemyKilled;
+    // Added EnemyKilled event
 
     protected virtual void Start()
     {
@@ -68,6 +71,7 @@ public abstract class Enemy : MonoBehaviour
     {
         GameManager.Instance.AddToScore(score);
         Destroy(gameObject);
+        EnemyKilled?.Invoke();
         // EnemiesOnScreen --;
         // TotalNumberOfEnemiesKilled ++;
     }
