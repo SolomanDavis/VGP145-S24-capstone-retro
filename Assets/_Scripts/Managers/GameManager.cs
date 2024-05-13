@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
             //lost a life
             if (value >= 0 && value < _lives)
             { 
-                //SpawnPlayer(PlayerSpawnLocation);
+                SpawnPlayer(PlayerSpawnLocation);
                 CanvasManager.Instance.UpdateLifeImage(value);
 
             }
