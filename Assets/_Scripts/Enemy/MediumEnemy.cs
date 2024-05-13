@@ -22,7 +22,7 @@ public class MediumEnemy : Enemy
         StartCoroutine(Countdown());
     }
 
-    IEnumerator Countdown()
+    IEnumerator Countdown() //Strafe Timer for Enemies
     {
         while (strafeTimer > 0f)
         {
@@ -34,20 +34,8 @@ public class MediumEnemy : Enemy
 
     //Enemy animations, damage and animations, aim in the direction the enemy is facing, enemy spawning, score
 
-    void Update()
-    {
-        // Move towards the target position
-
-
-        // Check if it's time to shoot
-        //if (Time.time >= nextFireTime)
-        // Shoot a bullet (Shoot script goes here)
-        // 
-        // Update the next allowed fire time, placeholder for shoot update function
-        //nextFireTime = Time.time + 1f / fireRate;
-    }
     //Placeholder Script for idle animation and change direction
-    private void strafe()
+    private void strafe() //Used to change direction for Strafing
     {
         if (strafeTimer <= 0)
         {
@@ -60,11 +48,7 @@ public class MediumEnemy : Enemy
     {
         if (other.CompareTag("PlayerProjectile"))
         {
-            damageTaken++;
-            if (damageTaken >= currentHealth)
-            {
-                Destroy(obj: MediumEnemy);
-            }
+            TakeDamage(1);
         }
     }
 
