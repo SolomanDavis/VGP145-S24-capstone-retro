@@ -37,6 +37,9 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     // Flag to indicate if the enemy manager is currently spawning enemies
     private bool _isSpawning = false;
 
+    // Added an event handler that will call TotalNumberOfEnemiesKilled()
+    private void _onEnemyKilled() => TotalNumberOfEnemiesKilled();
+
     // Awake is called when the script instance is being loaded
     protected override void Awake()
     {
@@ -118,8 +121,10 @@ public class EnemyManager : SingletonInScene<EnemyManager>
             }
 
             // Spawn the chosen enemy at the chosen location
-            Instantiate(chosenInfo.Prefab, spawnLocation.position, Quaternion.identity);
-
+            Enemy enemy = Instantiate(chosenInfo.Prefab, spawnLocation.position, Quaternion.identity);
+            
+            // Attaches handler to EnemyKilled event
+            enemy.EnemyKilled += _onEnemyKilled;
             // TODO: ZA - debugging purposes
             Debug.Log("ZA - spawned enemy of Prefab type: " + chosenInfo.Prefab.name);
 
@@ -208,5 +213,12 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     private bool IsAllEnemiesKilled()
     {
         return _enemiesSpawned == totalEnemies && _enemiesKilled == totalEnemies;
+    }
+
+    // Adds to _enemiesKilled and subtracts from _enemiesAlive when EnemyKilled event is invoked.
+    private void TotalNumberOfEnemiesKilled()
+    { 
+        _enemiesKilled++;
+        _enemiesAlive--; 
     }
 }

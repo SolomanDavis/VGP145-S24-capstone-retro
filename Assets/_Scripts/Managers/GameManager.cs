@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         // Function to be completed
-        
+        CanvasManager.Instance.GameOver();
         Debug.Log("GameOver");
     }
 
@@ -130,8 +130,8 @@ public class GameManager : Singleton<GameManager>
 
     // Event handler for when all enemies are killed
     private void OnAllEnemiesKilled()
-    {
-        // TODO: ZA - Replace with a win screen or level progression
+    {        
+        CanvasManager.Instance.GameWon();
         GameOver();
     }
 }
