@@ -66,18 +66,7 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetState(PathfindingState.Entrance);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetState(PathfindingState.Hover);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetState(PathfindingState.Dive);
-        }
+        // TODO: ZA - Detect Hover -> Dive state change
     }
 
     // Update is called once per frame

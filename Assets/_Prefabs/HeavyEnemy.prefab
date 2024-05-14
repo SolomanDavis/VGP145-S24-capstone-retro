@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 52363563899946470}
   - component: {fileID: 323139555954875167}
   - component: {fileID: 657371619609228024}
-  - component: {fileID: 7242709834977407671}
   - component: {fileID: 8041749919635557403}
   - component: {fileID: 1623217572968935540}
+  - component: {fileID: 5850096223089979499}
   m_Layer: 0
   m_Name: HeavyEnemy
   m_TagString: Enemy
@@ -108,7 +108,6 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1471467457
-  m_SortingLayer: 2
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 179000836, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
@@ -233,3 +232,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &5850096223089979499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283786697403893763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8459c7d4e540045919484969802f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedAlongPath: 0.5
+  _state: 0

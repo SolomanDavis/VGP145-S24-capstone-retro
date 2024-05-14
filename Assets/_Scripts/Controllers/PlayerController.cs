@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
 
         // Check if the player is moving horizontally and set animation parameter accordingly
-        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        // animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
     }
 
 
