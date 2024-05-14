@@ -76,9 +76,9 @@ public abstract class Enemy : MonoBehaviour
         EnemyHealth -= damage;
         if (EnemyHealth <= 0)
         {
-            Debug.Log("Anim triggered");
             anim.SetTrigger("IsDead");
-            
+
+            bc.enabled = false; // Turn off box collider to prevent further damage
         }
     }
 
@@ -88,8 +88,6 @@ public abstract class Enemy : MonoBehaviour
         GameManager.Instance.AddToScore(score);
         EnemyKilled?.Invoke();
         Destroy(gameObject);
-        // EnemiesOnScreen --;
-        // TotalNumberOfEnemiesKilled ++;
     }
     
     public bool IsLookingDown()

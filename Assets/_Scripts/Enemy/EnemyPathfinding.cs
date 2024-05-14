@@ -44,6 +44,8 @@ public class EnemyPathfinding : MonoBehaviour
         {
             _splineContainer = FindObjectOfType<SplineContainer>();
         }
+
+        _chosenPath = Random.Range(0, _splineContainer.Splines.Count());
     }
 
     // ChoosePath sets the path index for the enemy to follow

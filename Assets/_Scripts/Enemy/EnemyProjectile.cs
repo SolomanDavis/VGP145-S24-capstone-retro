@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -51,11 +48,5 @@ public class EnemyProjectile : MonoBehaviour
     private void OnUnpause()
     {
         rb.velocity = -Vector2.up * bulletSpeed;
-    }
-
-    private void OnDestroy()
-    {
-        CanvasManager.Instance.GamePaused -= OnPause;
-        CanvasManager.Instance.GameUnpaused -= OnUnpause;
     }
 }
