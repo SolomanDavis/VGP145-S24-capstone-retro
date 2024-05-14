@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonInScene<GameManager>
 {
     // Player spawn location and Player prefab
     [SerializeField] public Transform PlayerSpawnLocation;
