@@ -27,9 +27,9 @@ public class HeavyEnemy : Enemy
 
     //TBC if player projectile is trigger _ TODO (Estelle)
     //TBC player projectile tage name _ TODO (Estelle)
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             _numberOfHits++;
             TakeDamage(1);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyProjectile : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -10,6 +11,7 @@ public class EnemyProjectile : MonoBehaviour
     [HideInInspector] public int speed;
     [HideInInspector] public int offset;
     [SerializeField] public int lifeTime;
+    [SerializeField] private float bulletSpeed = 10f;
 
     // Once PlayerController is pushed, uncomment this out ---------------------------
     //[SerializeField] PlayerController player;
@@ -20,8 +22,10 @@ public class EnemyProjectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
+        PlayerController player = FindObjectOfType<PlayerController>();
+
         // Once PlayerController is pushed, uncomment this out --------------------------
-        //rb.velocity = Vector2.MoveTowards(transform.position, player.transform + offset, speed * Time.deltaTime);
+        rb.velocity = -Vector2.up * bulletSpeed;
 
         Destroy(gameObject, lifeTime);
     }
@@ -29,7 +33,6 @@ public class EnemyProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

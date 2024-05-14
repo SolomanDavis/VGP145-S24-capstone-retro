@@ -29,11 +29,27 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IsLookingDown();
+        if (IsLookingDown())
+        {
+            Shoot();
+        }
     }
 
     // TriggerOnAnimationEvent
-    public void Shoot(int min, int max)
+    public void Shoot()
+    {
+        //This offset will allow the enemy script to choose to fire the projectile
+        //at the player with an offset to the left and right (we think....)
+        //int RandomNumberOffset = Random.Range(min, max);
+
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
+        
+        currentProjectile.speed = projectileSpeed;
+
+        currentProjectile.offset = 0;
+    }
+
+    /* public void Shoot(int min, int max)
     {
         //This offset will allow the enemy script to choose to fire the projectile
         //at the player with an offset to the left and right (we think....)
@@ -42,14 +58,16 @@ public abstract class Enemy : MonoBehaviour
         EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
         currentProjectile.speed = projectileSpeed;
         currentProjectile.offset = RandomNumberOffset;
-    }
+    }*/
 
     public virtual void TakeDamage(int damage)
     {
         EnemyHealth -= damage;
         if (EnemyHealth <= 0)
         {
+            Debug.Log("Anim triggered");
             anim.SetTrigger("IsDead");
+            
         }
     }
 
@@ -57,8 +75,10 @@ public abstract class Enemy : MonoBehaviour
     public virtual void EnemyDeath(int score)
     {
         GameManager.Instance.AddToScore(score);
-        Destroy(gameObject);
         EnemyKilled?.Invoke();
+        Destroy(gameObject);
+        // EnemiesOnScreen --;
+        // TotalNumberOfEnemiesKilled ++;
     }
     
     public bool IsLookingDown()
@@ -71,7 +91,7 @@ public abstract class Enemy : MonoBehaviour
         Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
 
         float angle = Vector3.Angle(transform.up, upVector);
-        Debug.Log("Angle: " + angle);
+        //Debug.Log("Angle: " + angle);
 
         return angle <= maxAngle;
     }
