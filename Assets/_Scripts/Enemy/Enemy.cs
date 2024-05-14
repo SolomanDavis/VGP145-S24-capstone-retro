@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
 
+    public event UnityAction EnemyKilled;
+    // Added EnemyKilled event
+
+    public float maxAngle = 45f;
 
     protected virtual void Start()
     {
@@ -31,7 +36,7 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        IsLookingDown();
     }
 
 
@@ -68,15 +73,26 @@ public abstract class Enemy : MonoBehaviour
     {
         GameManager.Instance.AddToScore(score);
         Destroy(gameObject);
+        EnemyKilled?.Invoke();
         // EnemiesOnScreen --;
         // TotalNumberOfEnemiesKilled ++;
     }
 
 
+    
+    public bool IsLookingDown()
+    {
+        Vector3 upVector = transform.position - Vector3.up;
+        //upVector.Normalize();
 
-    //public void Pathfinding()
-    //{
+        Debug.DrawLine(transform.position, upVector, Color.red);
 
-    //}
+        Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
+
+        float angle = Vector3.Angle(transform.up, upVector);
+        Debug.Log("Angle: " + angle);
+
+        return angle <= maxAngle;
+    }
 
 }

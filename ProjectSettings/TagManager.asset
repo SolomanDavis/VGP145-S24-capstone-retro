@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerProjectile
+  - HeavyEnemy
   layers:
   - Default
   - TransparentFX
@@ -41,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 3779726979
+  - name: Background
+    uniqueID: 250656225
+    locked: 0
+  - name: GameArea
+    uniqueID: 1471467457
     locked: 0
