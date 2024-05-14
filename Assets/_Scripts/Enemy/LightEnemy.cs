@@ -8,7 +8,7 @@ public class LightEnemy : Enemy
     public float strafeDistance = 5.0f;
     public float strafeDuration = 10f;
     public float currentHealth = 1f;
-    public float damageTaken;
+    public int damageTaken;
     public float moveSpeed;
 
     private float nextFireTime; // Time of the next fire
@@ -46,10 +46,20 @@ public class LightEnemy : Enemy
 
     void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("PlayerProjectile"))
+            if (other.gameObject.tag == "PlayerProjectile")
             {
-            TakeDamage(1);
+                damageTaken++;
+                TakeDamage(1);
             }
         }
-   
+
+    private void DeathAnimation()
+    {
+        if (damageTaken == currentHealth)
+        {
+            anim.SetInteger("NumberOfHits", damageTaken);
+            EnemyDeath(50);
+        }
+    }
+
 }

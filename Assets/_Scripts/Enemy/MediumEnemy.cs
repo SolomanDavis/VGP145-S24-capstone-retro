@@ -8,7 +8,7 @@ public class MediumEnemy : Enemy
     public float strafeDistance = 5.0f;
     public float strafeDuration = 10f;
     public float currentHealth = 2f;
-    public float damageTaken;
+    public int damageTaken;
     public float moveSpeed;
 
     private float nextFireTime; // Time of the next fire
@@ -46,10 +46,18 @@ public class MediumEnemy : Enemy
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerProjectile"))
+        if (other.gameObject.tag == "PlayerProjectile")
         {
             TakeDamage(1);
         }
     }
 
+    private void DeathAnimation()
+    {
+        if (damageTaken == currentHealth)
+        {
+            anim.SetInteger("NumberOfHits", damageTaken);
+            EnemyDeath(2);
+        }
+    }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 657371619609228024}
   m_Layer: 0
   m_Name: HeavyEnemy
-  m_TagString: HeavyEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1471467457
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 179000836, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -124,3 +124,4 @@ MonoBehaviour:
   enemyProjectileSpawn: {fileID: 0}
   projectileSpeed: 0
   TimeToDestroy: 1
+  maxAngle: 45
