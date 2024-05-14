@@ -26,7 +26,6 @@ public class GameManager : Singleton<GameManager>
 
         set
         {
-            Debug.Log("lives value and current lives "  + value.ToString() + " " + _lives.ToString());
             //lost a life
             if (value >= 0 && value < _lives)
             { 
@@ -112,14 +111,12 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.B))
         {
             Lives -= 1;
-           // Debug.Log(_lives.ToString());
         }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
 
             AddToScore(10);
-            Debug.Log(_lives.ToString());
         }
     }
 

@@ -146,7 +146,7 @@ public class EnemyRankGrid : MonoBehaviour
 
         if (emptyGridSlots.Count == 0)
         {
-            Debug.Log("No empty grid slots found for rank: " + startIndex + " to " + endIndex);
+            Debug.LogWarning("No empty grid slots found for rank: " + startIndex + " to " + endIndex);
             return null;
         }
 

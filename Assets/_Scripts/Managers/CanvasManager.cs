@@ -46,7 +46,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
             StartButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Game"));
 
             // This needs to be here so that when the game ends and the player returns to the main menu, then presses start again, the game is set back to the beginning. 
-            StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            // StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
 
         if (GameOverQuitButton || PauseQuitButton)

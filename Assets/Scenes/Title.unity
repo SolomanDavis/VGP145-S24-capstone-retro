@@ -858,9 +858,11 @@ MonoBehaviour:
   PauseQuitButton: {fileID: 0}
   MainMenu: {fileID: 0}
   PauseMenu: {fileID: 0}
-  GameOverMenu: {fileID: 0}
+  EndGameMenu: {fileID: 0}
   ScoreText: {fileID: 0}
   HighScoreText: {fileID: 0}
+  GameOverText: {fileID: 0}
+  WinText: {fileID: 0}
   LifeImages: []
 --- !u!1 &1065716363
 GameObject:

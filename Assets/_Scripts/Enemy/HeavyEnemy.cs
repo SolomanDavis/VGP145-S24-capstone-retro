@@ -13,11 +13,6 @@ public class HeavyEnemy : Enemy
         base.Start();
     }
 
-    // Update is called once per frame
-     
-
-
-
     /*
      OnTriggerEnter(Collider other): Calls the TakeDamage()
      when the enemy has a collision with the player's prjectile.
