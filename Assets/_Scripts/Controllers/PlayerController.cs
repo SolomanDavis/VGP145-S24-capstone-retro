@@ -10,6 +10,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f; // Speed of player movement
     private Animator animator;
 
+    private bool _isPaused = false;
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
+
     private void Start()
     {
         // Get the Animator component attached to the GameObject
@@ -18,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (_isPaused)
+            return;
+
         // Player movement
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);

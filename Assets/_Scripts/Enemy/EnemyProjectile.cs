@@ -13,10 +13,6 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] public int lifeTime;
     [SerializeField] private float bulletSpeed = 10f;
 
-    // Once PlayerController is pushed, uncomment this out ---------------------------
-    //[SerializeField] PlayerController player;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +22,9 @@ public class EnemyProjectile : MonoBehaviour
 
         // Once PlayerController is pushed, uncomment this out --------------------------
         rb.velocity = -Vector2.up * bulletSpeed;
+
+        CanvasManager.Instance.GamePaused += OnPause;
+        CanvasManager.Instance.GameUnpaused += OnUnpause;
 
         Destroy(gameObject, lifeTime);
     }
@@ -37,11 +36,26 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-                if (collision.gameObject.CompareTag("Player"))
-            {
-                // collision.gameObject.GetComponent<Animator>().SetTrigger("IsDead");
-                Destroy(gameObject);
-            }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // collision.gameObject.GetComponent<Animator>().SetTrigger("IsDead");
+            Destroy(gameObject);
+        }
     }
 
+    private void OnPause()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
+    private void OnUnpause()
+    {
+        rb.velocity = -Vector2.up * bulletSpeed;
+    }
+
+    private void OnDestroy()
+    {
+        CanvasManager.Instance.GamePaused -= OnPause;
+        CanvasManager.Instance.GameUnpaused -= OnUnpause;
+    }
 }

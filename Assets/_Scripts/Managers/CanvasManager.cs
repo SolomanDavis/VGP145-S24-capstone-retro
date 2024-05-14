@@ -113,7 +113,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
                 GameUnpaused?.Invoke();
         }
 
-        if (PauseMenu.activeInHierarchy)
+        if (PauseMenu.activeInHierarchy || EndGameMenu.activeInHierarchy)
         {
             Time.timeScale = 0;
         }
@@ -140,6 +140,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         EndGameMenu.SetActive(true);
         GameOverText.enabled = false;
         WinText.enabled = true;
+        GamePaused?.Invoke();
     }
 
     public void GameOver()
@@ -147,6 +148,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         EndGameMenu.SetActive(true);
         WinText.enabled = false;
         GameOverText.enabled = true;
+        GamePaused?.Invoke();
     }
 
     public void UpdateLifeImage(int lives)

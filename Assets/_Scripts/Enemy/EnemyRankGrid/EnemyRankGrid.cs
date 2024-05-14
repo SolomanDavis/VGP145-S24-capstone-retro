@@ -19,6 +19,14 @@ public class EnemyRankGrid : MonoBehaviour
     private int[] _gridSlotTypes;
     private EnemyRankGridSlot[,] _gridSlots;
 
+    private bool _isPaused = false;
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +95,11 @@ public class EnemyRankGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isPaused)
+            return;
+
+        // TODO: ZA - strafing effect
+        // TODO: ZA - breathing effect
     }
 
     public EnemyRankGridSlot GetUnassignedGridSlot(EnemyRank enemyRank)

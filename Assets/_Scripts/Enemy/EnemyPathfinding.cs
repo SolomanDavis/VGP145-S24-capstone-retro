@@ -21,6 +21,8 @@ public class EnemyPathfinding : MonoBehaviour
     // HOVER PATHFINDING
     public Transform HoverLocation { get; set; }
 
+    private bool _isPaused = false;
+
     public enum PathfindingState
     {
         Entrance,
@@ -28,6 +30,12 @@ public class EnemyPathfinding : MonoBehaviour
         Dive,
     }
     [SerializeField] private PathfindingState _state = PathfindingState.Entrance; // Starting state: Entrance
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +64,9 @@ public class EnemyPathfinding : MonoBehaviour
     // TODO: ZA - Estelle - DEBUG STATE CHANGER - REMOVE
     private void Update()
     {
+        if (_isPaused)
+            return;
+
         // Detect Entrance -> Hover state change
         if (_state == PathfindingState.Entrance)
         {
@@ -72,6 +83,9 @@ public class EnemyPathfinding : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (_isPaused)
+            return;
+
         Vector3 newPosition = Vector3.zero;
         Vector3 newDirection = Vector3.up;
 

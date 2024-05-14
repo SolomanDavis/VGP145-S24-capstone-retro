@@ -18,6 +18,14 @@ public abstract class Enemy : MonoBehaviour
 
     public float maxAngle = 45f;
 
+    private bool _isPaused = false;
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
+
     protected virtual void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -29,6 +37,9 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isPaused)
+            return;
+
         if (IsLookingDown())
         {
             Shoot();

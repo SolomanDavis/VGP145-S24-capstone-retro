@@ -151,9 +151,6 @@ public class EnemyManager : SingletonInScene<EnemyManager>
                 continue;
             }
 
-            // TODO: ZA - debugging purposes
-            Debug.Log($"ZA - spawned {chosenInfo.Prefab.name} of rank " + chosenInfo.Rank);
-
             // Update stats
             _enemiesSpawned++;
             _enemiesAlive++;
