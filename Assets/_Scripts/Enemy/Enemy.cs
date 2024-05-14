@@ -16,6 +16,8 @@ public abstract class Enemy : MonoBehaviour
 
     public event UnityAction EnemyKilled;
 
+    public float maxAngle = 45f;
+
     protected virtual void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -27,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        IsLookingDown();
     }
 
     // TriggerOnAnimationEvent
@@ -57,4 +60,20 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
         EnemyKilled?.Invoke();
     }
+    
+    public bool IsLookingDown()
+    {
+        Vector3 upVector = transform.position - Vector3.up;
+        //upVector.Normalize();
+
+        Debug.DrawLine(transform.position, upVector, Color.red);
+
+        Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
+
+        float angle = Vector3.Angle(transform.up, upVector);
+        Debug.Log("Angle: " + angle);
+
+        return angle <= maxAngle;
+    }
+
 }
