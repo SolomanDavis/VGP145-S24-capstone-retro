@@ -7,6 +7,8 @@ public class EnemySpawnInfo : ScriptableObject
     // Prefab of the enemy to spawn
     [SerializeField] public Enemy Prefab;
 
+    [SerializeField] public EnemyRank Rank;
+
     // The sum of all distribution values of all enemy spawn infos must equal the total number of enemies to spawn
     [SerializeField] public int DistributionValue;
 }

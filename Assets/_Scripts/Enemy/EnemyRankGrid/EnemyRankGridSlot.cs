@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class EnemyRankGridSlot : MonoBehaviour
 {
-    // Grid parentGrid;
+    public Enemy enemy;
 
-    // Start is called before the first frame update
-    void Start()
+    public void AssignEnemy(Enemy enemy)
     {
-/*        parentGrid = GetComponentInParent<Grid>();
-        Vector3Int cellPosition = parentGrid.WorldToCell(transform.position);
-        transform.position = parentGrid.GetCellCenterWorld(cellPosition);
+        this.enemy = enemy;
+        this.enemy.EnemyKilled += UnassignEnemy;
+    }
 
-        Debug.Log("ZA - transform: " + transform.localPosition);
-*/    }
-
-    // Update is called once per frame
-    void Update()
+    public void UnassignEnemy()
     {
+        enemy.EnemyKilled -= UnassignEnemy;
+        enemy = null;
     }
 }
