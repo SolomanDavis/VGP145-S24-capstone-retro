@@ -94,10 +94,10 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: NumberOfHits
+  - m_Name: EnemyHealth
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 0
+    m_DefaultInt: 1
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   m_AnimatorLayers:
@@ -122,8 +122,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: NumberOfHits
-    m_EventTreshold: 1
+    m_ConditionEvent: EnemyHealth
+    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsDead
     m_EventTreshold: 0
