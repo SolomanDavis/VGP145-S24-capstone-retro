@@ -88,8 +88,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void EnemyDeath(int score)
     {
         GameManager.Instance.AddToScore(score);
-        Destroy(gameObject);
         EnemyKilled?.Invoke();
+        Destroy(gameObject);
         // EnemiesOnScreen --;
         // TotalNumberOfEnemiesKilled ++;
     }

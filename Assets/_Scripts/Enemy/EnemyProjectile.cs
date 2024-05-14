@@ -12,6 +12,8 @@ public class EnemyProjectile : MonoBehaviour
     [HideInInspector] public int offset;
     [SerializeField] public int lifeTime;
     [SerializeField] private float bulletSpeed = 10f;
+
+    Vector3 lastPos;
     // Once PlayerController is pushed, uncomment this out ---------------------------
     //[SerializeField] PlayerController player;
 
@@ -22,6 +24,7 @@ public class EnemyProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         PlayerController player = FindObjectOfType<PlayerController>();
+        lastPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z);
 
         // Once PlayerController is pushed, uncomment this out --------------------------
         rb.velocity = -Vector2.up * bulletSpeed;
@@ -32,7 +35,7 @@ public class EnemyProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = Vector3.MoveTowards(transform.position, lastPos, speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
