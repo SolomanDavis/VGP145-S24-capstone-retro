@@ -102,7 +102,17 @@ public class GameManager : SingletonInScene<GameManager>
 
         CanvasManager.Instance.UpdateLifeImage(Lives);
         EnemyManager.Instance.Restart();
+        DestroyPlayer();
         StartCoroutine(SpawnPlayer(PlayerSpawnLocation));
+    }
+
+    private void DestroyPlayer()
+    {
+        PlayerController[] players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+        for (int i = 0; i < players.Length; ++i)
+        {
+            Destroy(players[i].gameObject);
+        }
     }
 
     //Added to test game over menu. 
