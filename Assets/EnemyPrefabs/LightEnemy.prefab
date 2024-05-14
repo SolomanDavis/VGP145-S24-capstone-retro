@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3261648010404127490}
   - component: {fileID: 3009246606749988355}
   - component: {fileID: 7786223551839740129}
+  - component: {fileID: 3454764198952770825}
   m_Layer: 0
   m_Name: LightEnemy
   m_TagString: Untagged
@@ -97,3 +98,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ed62ee4b92b344bb404129cd3382dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHealth: 0
+  enemyProjectile: {fileID: 0}
+  enemyProjectileSpawn: {fileID: 0}
+  projectileSpeed: 0
+  TimeToDestroy: 1
+  fireRate: 1
+  strafeDistance: 5
+  strafeDuration: 10
+  currentHealth: 1
+  damageTaken: 0
+  moveSpeed: 0
+--- !u!95 &3454764198952770825
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158397799593119787}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ebf258b88b514d4297e09c70cde0282, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
