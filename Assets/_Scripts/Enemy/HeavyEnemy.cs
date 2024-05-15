@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class HeavyEnemy : Enemy
 {
-
-    private int _numberOfHits;
-
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -14,8 +13,6 @@ public class HeavyEnemy : Enemy
     }
 
     // Update is called once per frame
-     
-
 
 
     /*
@@ -25,24 +22,22 @@ public class HeavyEnemy : Enemy
      change the enemy's color when it has taken its 1st hit.
     */
 
-    //TBC if player projectile is trigger _ TODO (Estelle)
-    //TBC player projectile tage name _ TODO (Estelle)
+    // When colliding with the Player projectile, Heavy enemy takes "1" damage. 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PlayerProjectile")
         {
-            _numberOfHits++;
             TakeDamage(1);
             UpdateHealthStatus();
         }
     }
 
-    // Tracks _numberOfHits and calls the heavy enemy's ChangeColor().
+    // When EnemyHealt == 1, the Heavy enemy changes color to purple.
     private void UpdateHealthStatus()
     {
-        if (_numberOfHits == 1)
+        if (EnemyHealth == 1)
         {
-            anim.SetInteger("NumberOfHits", _numberOfHits);
+            anim.SetInteger("EnemyHealth", EnemyHealth);
         }
 
     }

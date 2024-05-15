@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     //Player Destruction
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyProjectile"))
+        if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
             GameManager.Instance.Lives--;
 

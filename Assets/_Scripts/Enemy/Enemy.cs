@@ -12,7 +12,7 @@ public abstract class Enemy : MonoBehaviour
     protected BoxCollider2D bc;
     protected Animator anim;
     
-    [SerializeField] private int EnemyHealth;
+    [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
