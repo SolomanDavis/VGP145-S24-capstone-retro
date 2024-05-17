@@ -8,8 +8,19 @@ public class Shoot : MonoBehaviour
     [SerializeField] private Transform firePoint; // Point where the bullet will be spawned
     [SerializeField] private float bulletSpeed = 10f; // Speed of the bullet
 
+    private bool _isPaused = false;
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
+
     private void Update()
     {
+        if (_isPaused)
+            return;
+
         if (Input.GetButtonDown("Fire1"))
         {
             fire();

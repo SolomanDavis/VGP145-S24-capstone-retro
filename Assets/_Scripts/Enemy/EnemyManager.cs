@@ -100,6 +100,13 @@ public class EnemyManager : SingletonInScene<EnemyManager>
         _enemiesSpawned = 0;
         _enemiesAlive = 0;
         _enemiesKilled = 0;
+
+        // Destroy all existing enemies
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        for (int i = 0; i < enemies.Length; ++i)
+        {
+            Destroy(enemies[i].gameObject);
+        }
     }
 
     public void SpawnEnemies()
@@ -150,9 +157,6 @@ public class EnemyManager : SingletonInScene<EnemyManager>
                 Destroy(enemy.gameObject);
                 continue;
             }
-
-            // TODO: ZA - debugging purposes
-            Debug.Log($"ZA - spawned {chosenInfo.Prefab.name} of rank " + chosenInfo.Rank);
 
             // Update stats
             _enemiesSpawned++;

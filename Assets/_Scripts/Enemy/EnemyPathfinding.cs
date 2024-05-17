@@ -21,6 +21,8 @@ public class EnemyPathfinding : MonoBehaviour
     // HOVER PATHFINDING
     public Transform HoverLocation { get; set; }
 
+    private bool _isPaused = false;
+
     public enum PathfindingState
     {
         Entrance,
@@ -29,6 +31,12 @@ public class EnemyPathfinding : MonoBehaviour
     }
     [SerializeField] private PathfindingState _state = PathfindingState.Entrance; // Starting state: Entrance
 
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +44,8 @@ public class EnemyPathfinding : MonoBehaviour
         {
             _splineContainer = FindObjectOfType<SplineContainer>();
         }
+
+        _chosenPath = Random.Range(0, _splineContainer.Splines.Count());
     }
 
     // ChoosePath sets the path index for the enemy to follow
@@ -56,6 +66,9 @@ public class EnemyPathfinding : MonoBehaviour
     // TODO: ZA - Estelle - DEBUG STATE CHANGER - REMOVE
     private void Update()
     {
+        if (_isPaused)
+            return;
+
         // Detect Entrance -> Hover state change
         if (_state == PathfindingState.Entrance)
         {
@@ -66,23 +79,15 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetState(PathfindingState.Entrance);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetState(PathfindingState.Hover);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetState(PathfindingState.Dive);
-        }
+        // TODO: ZA - Detect Hover -> Dive state change
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (_isPaused)
+            return;
+
         Vector3 newPosition = Vector3.zero;
         Vector3 newDirection = Vector3.up;
 

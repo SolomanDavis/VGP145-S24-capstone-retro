@@ -12,9 +12,6 @@ public class HeavyEnemy : Enemy
         base.Start();
     }
 
-    // Update is called once per frame
-
-
     /*
      OnTriggerEnter(Collider other): Calls the TakeDamage()
      when the enemy has a collision with the player's prjectile.
@@ -22,10 +19,11 @@ public class HeavyEnemy : Enemy
      change the enemy's color when it has taken its 1st hit.
     */
 
-    // When colliding with the Player projectile, Heavy enemy takes "1" damage. 
-    private void OnTriggerEnter(Collider other)
+    //TBC if player projectile is trigger _ TODO (Estelle)
+    //TBC player projectile tage name _ TODO (Estelle)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             TakeDamage(1);
             UpdateHealthStatus();

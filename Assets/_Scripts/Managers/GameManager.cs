@@ -1,11 +1,15 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonInScene<GameManager>
 {
     // Player spawn location and Player prefab
     [SerializeField] public Transform PlayerSpawnLocation;
     [SerializeField] public GameObject PlayerPrefab;
+
+    [SerializeField] private float _spawnPlayerWaitTime = 2.0f;
+    [SerializeField] private float _gameOverWaitTime = 2.0f;
 
     private int _highScore;
 
@@ -22,17 +26,16 @@ public class GameManager : Singleton<GameManager>
 
         set
         {
-            Debug.Log("lives value and current lives "  + value.ToString() + " " + _lives.ToString());
             //lost a life
             if (value >= 0 && value < _lives)
             { 
-                SpawnPlayer(PlayerSpawnLocation);
+                StartCoroutine(SpawnPlayer(PlayerSpawnLocation));
                 CanvasManager.Instance.UpdateLifeImage(value);
-
             }
-
             else if (value < 0)
-            { GameOver(); }
+            {
+                StartCoroutine(GameOver());
+            }
 
             _lives = value;
         }
@@ -46,17 +49,17 @@ public class GameManager : Singleton<GameManager>
     }
 
     // Spawns a new player object at given location.
-    public void SpawnPlayer(Transform location)
+    private IEnumerator SpawnPlayer(Transform location)
     {
+        yield return new WaitForSeconds(_spawnPlayerWaitTime);
         Instantiate(PlayerPrefab, location.transform.position, Quaternion.identity);
     }
 
     // GameOver() called when lives are < 0.
-    public void GameOver()
+    private IEnumerator GameOver()
     {
-        // Function to be completed
+        yield return new WaitForSeconds(_gameOverWaitTime);
         CanvasManager.Instance.GameOver();
-        Debug.Log("GameOver");
     }
 
     //if score is > high-score sets high-score text with score and replaces previous high-score. 
@@ -82,16 +85,6 @@ public class GameManager : Singleton<GameManager>
     protected override void Start()
     {
         base.Start();
-
-        if (PlayerSpawnLocation != null && PlayerPrefab != null)
-        {
-            SpawnPlayer(PlayerSpawnLocation);
-        }
-        else
-        {
-            Debug.LogWarning("No player spawn location set in GameManager");
-        }
-
         RestartGame();
     }
 
@@ -109,6 +102,17 @@ public class GameManager : Singleton<GameManager>
 
         CanvasManager.Instance.UpdateLifeImage(Lives);
         EnemyManager.Instance.Restart();
+        DestroyPlayer();
+        StartCoroutine(SpawnPlayer(PlayerSpawnLocation));
+    }
+
+    private void DestroyPlayer()
+    {
+        PlayerController[] players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+        for (int i = 0; i < players.Length; ++i)
+        {
+            Destroy(players[i].gameObject);
+        }
     }
 
     //Added to test game over menu. 
@@ -117,14 +121,12 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.B))
         {
             Lives -= 1;
-           // Debug.Log(_lives.ToString());
         }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
 
             AddToScore(10);
-            Debug.Log(_lives.ToString());
         }
     }
 
@@ -132,6 +134,5 @@ public class GameManager : Singleton<GameManager>
     private void OnAllEnemiesKilled()
     {        
         CanvasManager.Instance.GameWon();
-        GameOver();
     }
 }

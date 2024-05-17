@@ -15,7 +15,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
 
             if (!instance)
             {
-                GameObject obj = new GameObject(); 
+                GameObject obj = new GameObject();
                 obj.name = typeof(T).Name;
                 instance = obj.AddComponent<T>();
                 DontDestroyOnLoad(obj);
