@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class HeavyEnemy : Enemy
 {
-
-    private int _numberOfHits;
-
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -26,18 +25,17 @@ public class HeavyEnemy : Enemy
     {
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
-            _numberOfHits++;
             TakeDamage(1);
             UpdateHealthStatus();
         }
     }
 
-    // Tracks _numberOfHits and calls the heavy enemy's ChangeColor().
+    // When EnemyHealt == 1, the Heavy enemy changes color to purple.
     private void UpdateHealthStatus()
     {
-        if (_numberOfHits == 1)
+        if (EnemyHealth == 1)
         {
-            anim.SetInteger("NumberOfHits", _numberOfHits);
+            anim.SetInteger("EnemyHealth", EnemyHealth);
         }
 
     }
