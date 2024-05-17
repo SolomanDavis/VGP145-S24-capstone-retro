@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978ec24556a637d468016ca1dd204911, type: 3}
   m_Name: HeavyEnemySpawnInfo
   m_EditorClassIdentifier: 
-  Prefab: {fileID: -2140353647538653243, guid: 956633e8cd71aa141b06d3f0da63d9ec, type: 3}
-  DistributionValue: 36
+  Prefab: {fileID: 657371619609228024, guid: 677982e7a85bccb489f96fab6f963aa0, type: 3}
+  Rank: 2
+  DistributionValue: 6
