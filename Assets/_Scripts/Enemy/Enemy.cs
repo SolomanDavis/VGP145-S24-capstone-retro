@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +15,6 @@ public abstract class Enemy : MonoBehaviour
     public float TimeToDestroy = 1;
 
     public event UnityAction EnemyKilled;
-    // Added EnemyKilled event
 
     public float maxAngle = 45f;
 
@@ -31,15 +26,11 @@ public abstract class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();                
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
         IsLookingDown();
     }
-
-
 
     // TriggerOnAnimationEvent
     public void Shoot(int min, int max)
@@ -49,13 +40,9 @@ public abstract class Enemy : MonoBehaviour
         int RandomNumberOffset = Random.Range(min, max);
 
         EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
-        
         currentProjectile.speed = projectileSpeed;
-
         currentProjectile.offset = RandomNumberOffset;
     }
-
-
 
     public virtual void TakeDamage(int damage)
     {
@@ -66,19 +53,13 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-
-
-        // This should called right at the end of the animation event on enemy death
+    // This should called right at the end of the animation event on enemy death
     public virtual void EnemyDeath(int score)
     {
         GameManager.Instance.AddToScore(score);
         Destroy(gameObject);
         EnemyKilled?.Invoke();
-        // EnemiesOnScreen --;
-        // TotalNumberOfEnemiesKilled ++;
     }
-
-
     
     public bool IsLookingDown()
     {
