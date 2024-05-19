@@ -7,7 +7,8 @@ public abstract class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected BoxCollider2D bc;
     protected Animator anim;
-    
+    AudioSource audioSource;
+
     [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
