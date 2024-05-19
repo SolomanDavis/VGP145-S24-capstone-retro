@@ -10,8 +10,7 @@ public class GameManager : SingletonInScene<GameManager>
 
     [SerializeField] private float _spawnPlayerWaitTime = 2.0f;
     [SerializeField] private float _gameOverWaitTime = 2.0f;
-
-    private int _highScore;
+               
 
     private int _score;
     public int Score => _score;
@@ -61,17 +60,7 @@ public class GameManager : SingletonInScene<GameManager>
         yield return new WaitForSeconds(_gameOverWaitTime);
         CanvasManager.Instance.GameOver();
     }
-
-    //if score is > high-score sets high-score text with score and replaces previous high-score. 
-    public int HighScore(int _score)
-    {
-        if(_score > _highScore) 
-        {
-            _highScore = _score;
-        }
-
-        return _highScore;
-    }
+       
 
     protected override void Awake()
     {
