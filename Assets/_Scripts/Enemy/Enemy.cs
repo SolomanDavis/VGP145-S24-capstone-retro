@@ -60,11 +60,9 @@ public abstract class Enemy : MonoBehaviour
         //at the player with an offset to the left and right (we think....)
         //int RandomNumberOffset = Random.Range(min, max);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
         
         currentProjectile.speed = projectileSpeed;
-
-        currentProjectile.offset = 0;
 
         _canShoot = false;
 
