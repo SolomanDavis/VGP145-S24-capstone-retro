@@ -160,6 +160,7 @@ MonoBehaviour:
   enemyProjectileSpawn: {fileID: 7600162121685525225}
   projectileSpeed: 2
   TimeToDestroy: 10
+  enemydeath: {fileID: 8300000, guid: b569fee8e2605ce488487c31dd98da2f, type: 3}
   maxAngle: 45
 --- !u!50 &8041749919635557403
 Rigidbody2D:

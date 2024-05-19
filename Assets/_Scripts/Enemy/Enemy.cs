@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
+    [SerializeField] AudioClip enemydeath;
 
     public event UnityAction EnemyKilled;
 
@@ -59,6 +60,7 @@ public abstract class Enemy : MonoBehaviour
         currentProjectile.speed = projectileSpeed;
 
         currentProjectile.offset = 0;
+
     }
 
     /* public void Shoot(int min, int max)
@@ -78,6 +80,8 @@ public abstract class Enemy : MonoBehaviour
         if (EnemyHealth <= 0)
         {
             anim.SetTrigger("IsDead");
+
+            audioSource.PlayOneShot(enemydeath);
 
             bc.enabled = false; // Turn off box collider to prevent further damage
         }
