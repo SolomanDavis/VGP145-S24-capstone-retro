@@ -125,4 +125,15 @@ public abstract class Enemy : MonoBehaviour
         _canShoot = true;
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyDeathCollider"))
+        {
+            EnemyDeath(0); 
+            Destroy(gameObject);
+        }
+    }
+
+
 }
