@@ -3,13 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using static EnemyPathfinding;
 
 public class HeavyEnemy : Enemy
 {
+
+    public EnemyPathfinding enemyPathfindingState;
+    private int heavyEnemyScore;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
+    }
+
+    void Update()
+    {
+       if(enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
+        { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
+       { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
+       { heavyEnemyScore = 400; }
     }
 
     /*
@@ -39,7 +55,12 @@ public class HeavyEnemy : Enemy
         }
 
     }
-    
+
+    // Calls EnemyDeath with relevant state score
+    public void callDeathWithScore()
+    {
+        EnemyDeath(heavyEnemyScore);
+    }
 
 }
 

@@ -31,6 +31,11 @@ public class EnemyPathfinding : MonoBehaviour
     }
     [SerializeField] private PathfindingState _state = PathfindingState.Entrance; // Starting state: Entrance
 
+    public PathfindingState State
+    {
+        get { return _state; }       
+    }
+
     private void Awake()
     {
         CanvasManager.Instance.GamePaused += () => _isPaused = true;
