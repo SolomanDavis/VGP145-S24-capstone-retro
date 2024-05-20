@@ -8,8 +8,12 @@ using static EnemyPathfinding;
 public class HeavyEnemy : Enemy
 {
 
-    public EnemyPathfinding enemyPathfindingState;
+    private EnemyPathfinding enemyPathfindingState;
     private int heavyEnemyScore;
+
+    [SerializeField] AudioClip enemyHit;
+
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -52,6 +56,7 @@ public class HeavyEnemy : Enemy
         if (EnemyHealth == 1)
         {
             anim.SetInteger("EnemyHealth", EnemyHealth);
+            audioSource.PlayOneShot(enemyHit);
         }
 
     }

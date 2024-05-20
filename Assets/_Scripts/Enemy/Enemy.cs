@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -8,14 +8,15 @@ public abstract class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected BoxCollider2D bc;
     protected Animator anim;
-    
+    AudioSource audioSource;
+
     [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
+    [SerializeField] AudioClip enemydeath;
     [SerializeField] private float shootCooldown = 1f;
-
     public event UnityAction EnemyKilled;
 
     public float maxAngle = 45f;
@@ -27,6 +28,7 @@ public abstract class Enemy : MonoBehaviour
     {
         CanvasManager.Instance.GamePaused += () => _isPaused = true;
         CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+
     }
 
     protected virtual void Start()
@@ -34,8 +36,8 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>(); 
-        
+        anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,12 +48,9 @@ public abstract class Enemy : MonoBehaviour
 
         if (IsLookingDown() && _canShoot)
         {
-           Shoot();
-            
+            Shoot();
         }
-        
     }
-    
 
     // TriggerOnAnimationEvent
     public void Shoot()
@@ -60,13 +59,14 @@ public abstract class Enemy : MonoBehaviour
         //at the player with an offset to the left and right (we think....)
         //int RandomNumberOffset = Random.Range(min, max);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
         
-        currentProjectile.bulletSpeed = projectileSpeed;
+        currentProjectile.speed = projectileSpeed;
 
         _canShoot = false;
 
         StartCoroutine(ShootCooldown());
+
     }
 
     /* public void Shoot(int min, int max)
@@ -87,6 +87,8 @@ public abstract class Enemy : MonoBehaviour
         {
             anim.SetTrigger("IsDead");
 
+            audioSource.PlayOneShot(enemydeath);
+
             bc.enabled = false; // Turn off box collider to prevent further damage
         }
     }
@@ -98,7 +100,7 @@ public abstract class Enemy : MonoBehaviour
         EnemyKilled?.Invoke();
         Destroy(gameObject);
     }
-    
+
     public bool IsLookingDown()
     {
         Vector3 downVector = Vector3.down;
@@ -126,3 +128,4 @@ public abstract class Enemy : MonoBehaviour
     }
 
 }
+
