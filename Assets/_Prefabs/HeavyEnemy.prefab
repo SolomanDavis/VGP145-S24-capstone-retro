@@ -247,3 +247,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedAlongPath: 0.5
   _state: 0
+  _pointA: {x: 0, y: 0, z: 0}
+  _pointB: {x: 0, y: 0, z: 0}
+  _pointC: {x: 0, y: 0, z: 0}
+  _pointD: {x: 0, y: 0, z: 0}
+  diveXMinRange: 10
+  diveXMaxRange: 14
+  diveYRange: 8
+  isDiving: 0
