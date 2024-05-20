@@ -62,7 +62,7 @@ public abstract class Enemy : MonoBehaviour
 
         EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
         
-        currentProjectile.speed = projectileSpeed;
+        currentProjectile.bulletSpeed = projectileSpeed;
 
         _canShoot = false;
 

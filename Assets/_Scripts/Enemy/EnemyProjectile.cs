@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     [HideInInspector] public int speed;
     [HideInInspector] public int offset;
     [SerializeField] public int lifeTime;
-    [SerializeField] private float bulletSpeed = 10f;
+    [SerializeField] public float bulletSpeed = 10f;
 
     // Start is called before the first frame update
     void Start()
