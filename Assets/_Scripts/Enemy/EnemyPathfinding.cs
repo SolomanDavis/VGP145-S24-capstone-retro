@@ -37,6 +37,22 @@ public class EnemyPathfinding : MonoBehaviour
         CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
     }
 
+    // Transform for dive splines
+    // Point A = Vector3 : determined in update
+
+    private Vector3 _pointA;
+    private Vector3 _pointB;
+    private Vector3 _pointC;
+    private Vector3 _pointD;
+
+    public float diveXMinRange = 10;
+    public float diveXMaxRange = 14;
+    public float diveYRange = 8;
+
+    // isDiving used in dive_state
+    private bool isDiving = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -171,11 +187,56 @@ public class EnemyPathfinding : MonoBehaviour
     }
 
     // CalculateDivePath calculates the next position and direction for the enemy in a Dive state
-    // TODO: to be implemented
     private void CalculateDivePath(out Vector3 position, out Vector3 direction)
     {
-        position = Vector3.zero;
-        direction = Vector3.zero;
+        
+        if (isDiving == false)
+        {
+            // TODO: Remove when Diving is automatically implemented. Uncomment to test.
+            // _interpFactor = 0f;
+
+            // Generate random points A - D for dive spline
+            _pointA = transform.position;
+            _pointD = generatePointD(transform.position.x, transform.position.y, transform.position.z);
+            _pointB = generatePointB(transform.position.x, transform.position.y, transform.position.z);
+            _pointC = generatePointC(transform.position.x, transform.position.y, transform.position.z);
+
+
+            // Determines if the dive will start left or right.
+            float flip = Random.Range(-1, 1);
+            if (flip < 0)
+            {
+                _pointB.x = _pointB.x * -1 + (2 * _pointA.x);
+                _pointC.x = _pointC.x * -1 + (2 * _pointA.x);
+
+            }
+           
+            isDiving = true;                     
+
+        }
+
+        //Orgiginal
+        //position = Vector3.zero;
+        //direction = Vector3.zero;
+        
+        CalculateInterpolationFactor();             
+
+        // Calculate spline points
+        Vector3 _pointABposition = Vector3.Lerp(_pointA, _pointB, _interpFactor);
+        Vector3 _pointBCposition = Vector3.Lerp(_pointB, _pointC, _interpFactor);
+        Vector3 _pointCDposition = Vector3.Lerp(_pointC, _pointD, _interpFactor);
+
+        Vector3 _pointAB_BCposition = Vector3.Lerp(_pointABposition, _pointBCposition, _interpFactor);        
+        Vector3 _pointBC_CDposition = Vector3.Lerp(_pointBCposition, _pointCDposition, _interpFactor);
+
+        Vector3 _pointABCDposition = Vector3.Lerp(_pointAB_BCposition, _pointBC_CDposition, _interpFactor);
+
+        // Sets final spline point as position
+        position = _pointABCDposition;
+
+        // Calculate direction
+        direction = (transform.position - _pointABCDposition);
+        direction.Normalize();
     }
 
     // Calculate current interpolation factor according to time and speed
@@ -184,4 +245,30 @@ public class EnemyPathfinding : MonoBehaviour
         _interpFactor += Time.deltaTime * speedAlongPath;
         _interpFactor = Mathf.Clamp01(_interpFactor);
     }
+
+    // Generates Vector3 for spline poins B, C and D.
+    private Vector3 generatePointB(float Position_x, float Position_y, float Position_Z)    
+    {
+        float newPosition_Y = Random.Range(Position_y, Position_y - diveYRange/2);
+        float newPosition_X = Random.Range(Position_x+ diveXMinRange, Position_x + diveXMinRange);
+        Vector3 randomPointB = new Vector3(newPosition_X, newPosition_Y, Position_Z);
+        return randomPointB;
+    }
+
+    private Vector3 generatePointC(float Position_x, float Position_y, float Position_Z)
+    {
+        float newPosition_Y = Random.Range(Position_y - diveYRange / 2, Position_y - diveYRange);
+        float newPosition_X = Random.Range(Position_x - diveXMinRange, Position_x - diveXMinRange);
+        Vector3 randomPointC = new Vector3(newPosition_X, newPosition_Y, Position_Z);
+        return randomPointC;
+    }
+
+    private Vector3 generatePointD(float Position_x, float Position_y, float Position_Z)
+    {
+        float newPosition_Y = Position_y - diveYRange ;
+        float newPosition_X = Random.Range(-3 + Position_x, 3 + Position_x);
+        Vector3 randomPointD = new Vector3 (newPosition_X, newPosition_Y, Position_Z);
+        return randomPointD;
+    }
+
 }
