@@ -54,5 +54,11 @@ public class MediumEnemy : Enemy
             anim.SetInteger("EnemyHealth", damageTaken);
             EnemyDeath(80);
         }
+        else
+        {
+            //if enemy is in diving
+            anim.SetInteger("EnemyHealth", damageTaken);
+            EnemyDeath(160);
+        }
     }
 }

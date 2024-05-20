@@ -54,6 +54,12 @@ public class LightEnemy : Enemy
             anim.SetInteger("EnemyHealth", damageTaken);
             EnemyDeath(50);
         }
+        else
+        {
+            //if enemy state is diving
+            anim.SetInteger("EnemyHealth", damageTaken);
+            EnemyDeath(100);
+        }
     }
 
 }
