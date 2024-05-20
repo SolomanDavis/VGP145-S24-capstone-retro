@@ -10,8 +10,7 @@ public class GameManager : SingletonInScene<GameManager>
 
     [SerializeField] private float _spawnPlayerWaitTime = 2.0f;
     [SerializeField] private float _gameOverWaitTime = 2.0f;
-
-    private int _highScore;
+               
 
     private int _score;
     public int Score => _score;
@@ -57,21 +56,12 @@ public class GameManager : SingletonInScene<GameManager>
 
     // GameOver() called when lives are < 0.
     private IEnumerator GameOver()
-    {
+    {        
         yield return new WaitForSeconds(_gameOverWaitTime);
+        HighScoreManager.Instance.SetHighScore(_score);
         CanvasManager.Instance.GameOver();
     }
-
-    //if score is > high-score sets high-score text with score and replaces previous high-score. 
-    public int HighScore(int _score)
-    {
-        if(_score > _highScore) 
-        {
-            _highScore = _score;
-        }
-
-        return _highScore;
-    }
+       
 
     protected override void Awake()
     {
@@ -125,14 +115,17 @@ public class GameManager : SingletonInScene<GameManager>
 
         if (Input.GetKeyDown(KeyCode.N))
         {
-
             AddToScore(10);
         }
+
+
+
     }
 
     // Event handler for when all enemies are killed
     private void OnAllEnemiesKilled()
-    {        
+    {
+        HighScoreManager.Instance.SetHighScore(_score);
         CanvasManager.Instance.GameWon();
     }
 }
