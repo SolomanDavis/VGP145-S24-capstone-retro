@@ -162,6 +162,7 @@ MonoBehaviour:
   TimeToDestroy: 10
   enemydeath: {fileID: 8300000, guid: b569fee8e2605ce488487c31dd98da2f, type: 3}
   maxAngle: 45
+  enemyHit: {fileID: 8300000, guid: ee1cd60fba5bf304fa58df0f08901842, type: 3}
 --- !u!50 &8041749919635557403
 Rigidbody2D:
   serializedVersion: 4

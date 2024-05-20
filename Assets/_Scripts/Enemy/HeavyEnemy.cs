@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class HeavyEnemy : Enemy
 {
+    [SerializeField] AudioClip enemyHit;
+
+    AudioSource audioSource;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -36,6 +40,7 @@ public class HeavyEnemy : Enemy
         if (EnemyHealth == 1)
         {
             anim.SetInteger("EnemyHealth", EnemyHealth);
+            audioSource.PlayOneShot(enemyHit);
         }
 
     }
