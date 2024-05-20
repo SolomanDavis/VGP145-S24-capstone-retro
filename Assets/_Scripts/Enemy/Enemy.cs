@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEditor.ShaderKeywordFilter;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -41,13 +42,14 @@ public abstract class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (_isPaused)
             return;
 
         if (IsLookingDown() && _canShoot)
         {
+            
             Shoot();
         }
     }
@@ -59,14 +61,12 @@ public abstract class Enemy : MonoBehaviour
         //at the player with an offset to the left and right (we think....)
         //int RandomNumberOffset = Random.Range(min, max);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
         
-        currentProjectile.speed = projectileSpeed;
-
-        _canShoot = false;
+        currentProjectile.bulletSpeed = projectileSpeed;
 
         StartCoroutine(ShootCooldown());
-
+        
     }
 
     /* public void Shoot(int min, int max)
@@ -103,18 +103,13 @@ public abstract class Enemy : MonoBehaviour
 
     public bool IsLookingDown()
     {
-        Vector3 downVector = Vector3.down;
-        //Vector3 upVector = transform.position - Vector3.up;
-        //upVector.Normalize();
+       Vector3 downVector = Vector3.down;
+      
+        //Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
 
-        //Debug.DrawLine(transform.position, upVector, Color.red);
-        Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
-
-        Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
+       // Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
 
         float angle = Vector3.Angle(transform.up, downVector);
-
-        //float angle = Vector3.Angle(transform.up, upVector);
 
         //Debug.Log("Angle: " + angle);
 
@@ -123,7 +118,10 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator ShootCooldown()
     {
+        _canShoot = false;
+
         yield return new WaitForSeconds(shootCooldown);
+
         _canShoot = true;
     }
 
