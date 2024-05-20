@@ -3,11 +3,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(EnemyRankGrid))]
 public class EnemyManager : SingletonInScene<EnemyManager>
 {
     // Event signals for other game systems to listen to
     public event UnityAction AllEnemiesSpawned; // All enemies have been spawned
     public event UnityAction AllEnemiesKilled; // All have been spawned and all enemies have been killed
+
+    private EnemyRankGrid _rankGrid;
 
     // Numbers of enemies total and in squad to spawn in the game
     [SerializeField] private int totalEnemies = 36;
@@ -22,7 +25,6 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     [SerializeField] private EnemySpawnInfo[] enemySpawnInfos;
     private int[] _enemyDistributions;
 
-    // TODO: ZA - replace with actual spawn locations
     // List of possible spawn locations for enemy squads
     [SerializeField] private Transform[] enemySpawnLocations;
 
@@ -43,16 +45,18 @@ public class EnemyManager : SingletonInScene<EnemyManager>
     // Awake is called when the script instance is being loaded
     protected override void Awake()
     {
+        _rankGrid = GetComponent<EnemyRankGrid>();
+
         if (totalEnemies == 0)
             Debug.LogError("[EnemyManager] Total number of enemies to spawn is set to 0.");
 
         if (minEnemiesPerSquad == 0 || maxEnemiesPerSquad == 0 || maxEnemiesPerSquad > totalEnemies)
             Debug.LogError("[EnemyManager] Min or max number of enemies per squad is set to invalid value.");
 
-        if (enemySpawnInfos.Length == 0)
+        if (enemySpawnInfos == null || enemySpawnInfos.Length == 0)
             Debug.LogError("[EnemyManager] No enemy spawn infos set.");
 
-        if (enemySpawnLocations.Length == 0)
+        if (enemySpawnLocations == null || enemySpawnLocations.Length == 0)
             Debug.LogError("[EnemyManager] No enemy spawn locations set.");
 
         // Verify spawn info is set correctly
@@ -96,6 +100,13 @@ public class EnemyManager : SingletonInScene<EnemyManager>
         _enemiesSpawned = 0;
         _enemiesAlive = 0;
         _enemiesKilled = 0;
+
+        // Destroy all existing enemies
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        for (int i = 0; i < enemies.Length; ++i)
+        {
+            Destroy(enemies[i].gameObject);
+        }
     }
 
     public void SpawnEnemies()
@@ -120,13 +131,32 @@ public class EnemyManager : SingletonInScene<EnemyManager>
                 _isSpawning = false;
             }
 
+            // Ensure a grid slot exists for the chosen enemy type
+            EnemyRankGridSlot gridSlot = _rankGrid.GetUnassignedGridSlot(chosenInfo.Rank);
+            if (gridSlot == null)
+            {
+                // Just skip this enemy - try again next cycle
+                continue;
+            }
+
             // Spawn the chosen enemy at the chosen location
             Enemy enemy = Instantiate(chosenInfo.Prefab, spawnLocation.position, Quaternion.identity);
             
             // Attaches handler to EnemyKilled event
             enemy.EnemyKilled += _onEnemyKilled;
-            // TODO: ZA - debugging purposes
-            Debug.Log("ZA - spawned enemy of Prefab type: " + chosenInfo.Prefab.name);
+
+            // Assign grid slot to enemy and vice versa
+            try
+            {
+                enemy.GetComponent<EnemyPathfinding>().HoverLocation = gridSlot.transform;
+                gridSlot.enemy = enemy;
+            }
+            catch
+            {
+                Debug.LogWarning($"Enemy {enemy} did not have EnemyPathfinding component");
+                Destroy(enemy.gameObject);
+                continue;
+            }
 
             // Update stats
             _enemiesSpawned++;

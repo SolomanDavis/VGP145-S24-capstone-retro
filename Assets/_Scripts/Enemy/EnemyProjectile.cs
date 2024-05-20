@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyProjectile : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -10,18 +8,20 @@ public class EnemyProjectile : MonoBehaviour
     [HideInInspector] public int speed;
     [HideInInspector] public int offset;
     [SerializeField] public int lifeTime;
-
-    // Once PlayerController is pushed, uncomment this out ---------------------------
-    //[SerializeField] PlayerController player;
-
+    [SerializeField] public float bulletSpeed = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
+        PlayerController player = FindObjectOfType<PlayerController>();
+
         // Once PlayerController is pushed, uncomment this out --------------------------
-        //rb.velocity = Vector2.MoveTowards(transform.position, player.transform + offset, speed * Time.deltaTime);
+        rb.velocity = -Vector2.up * bulletSpeed;
+
+        CanvasManager.Instance.GamePaused += OnPause;
+        CanvasManager.Instance.GameUnpaused += OnUnpause;
 
         Destroy(gameObject, lifeTime);
     }
@@ -29,16 +29,24 @@ public class EnemyProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-                if (collision.gameObject.CompareTag("Player"))
-            {
-                // collision.gameObject.GetComponent<Animator>().SetTrigger("IsDead");
-                Destroy(gameObject);
-            }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // collision.gameObject.GetComponent<Animator>().SetTrigger("IsDead");
+            Destroy(gameObject);
+        }
     }
 
+    private void OnPause()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
+    private void OnUnpause()
+    {
+        rb.velocity = -Vector2.up * bulletSpeed;
+    }
 }

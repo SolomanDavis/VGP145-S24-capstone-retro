@@ -46,7 +46,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
             StartButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Game"));
 
             // This needs to be here so that when the game ends and the player returns to the main menu, then presses start again, the game is set back to the beginning. 
-            StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            //StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
 
         if (GameOverQuitButton || PauseQuitButton)
@@ -113,7 +113,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
                 GameUnpaused?.Invoke();
         }
 
-        if (PauseMenu.activeInHierarchy)
+        if (PauseMenu.activeInHierarchy || EndGameMenu.activeInHierarchy)
         {
             Time.timeScale = 0;
         }
@@ -130,7 +130,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         //setting high-score text.
         if (HighScoreText)
         {
-            HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
+            HighScoreText.text = HighScoreManager.Instance.GetHighScore(GameManager.Instance.Score).ToString();
         }
     }
 
@@ -140,6 +140,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         EndGameMenu.SetActive(true);
         GameOverText.enabled = false;
         WinText.enabled = true;
+        GamePaused?.Invoke();
     }
 
     public void GameOver()
@@ -147,6 +148,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         EndGameMenu.SetActive(true);
         WinText.enabled = false;
         GameOverText.enabled = true;
+        GamePaused?.Invoke();
     }
 
     public void UpdateLifeImage(int lives)

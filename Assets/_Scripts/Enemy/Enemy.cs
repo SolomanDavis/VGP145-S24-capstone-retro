@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,50 +9,76 @@ public abstract class Enemy : MonoBehaviour
     protected BoxCollider2D bc;
     protected Animator anim;
     
-    [SerializeField] private int EnemyHealth;
+    [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
+    [SerializeField] private float shootCooldown = 1f;
 
     public event UnityAction EnemyKilled;
-    // Added EnemyKilled event
 
     public float maxAngle = 45f;
+
+    private bool _isPaused = false;
+    private bool _canShoot = true;
+
+    private void Awake()
+    {
+        CanvasManager.Instance.GamePaused += () => _isPaused = true;
+        CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+    }
 
     protected virtual void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>();                
+        anim = GetComponent<Animator>(); 
+        
     }
-
-
 
     // Update is called once per frame
     void Update()
     {
-        IsLookingDown();
+        if (_isPaused)
+            return;
+
+        if (IsLookingDown() && _canShoot)
+        {
+           Shoot();
+            
+        }
+        
     }
-
-
+    
 
     // TriggerOnAnimationEvent
-    public void Shoot(int min, int max)
+    public void Shoot()
+    {
+        //This offset will allow the enemy script to choose to fire the projectile
+        //at the player with an offset to the left and right (we think....)
+        //int RandomNumberOffset = Random.Range(min, max);
+
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
+        
+        currentProjectile.bulletSpeed = projectileSpeed;
+
+        _canShoot = false;
+
+        StartCoroutine(ShootCooldown());
+    }
+
+    /* public void Shoot(int min, int max)
     {
         //This offset will allow the enemy script to choose to fire the projectile
         //at the player with an offset to the left and right (we think....)
         int RandomNumberOffset = Random.Range(min, max);
 
         EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
-        
         currentProjectile.speed = projectileSpeed;
-
         currentProjectile.offset = RandomNumberOffset;
-    }
-
-
+    }*/
 
     public virtual void TakeDamage(int damage)
     {
@@ -63,36 +86,43 @@ public abstract class Enemy : MonoBehaviour
         if (EnemyHealth <= 0)
         {
             anim.SetTrigger("IsDead");
+
+            bc.enabled = false; // Turn off box collider to prevent further damage
         }
     }
 
-
-
-        // This should called right at the end of the animation event on enemy death
+    // This should called right at the end of the animation event on enemy death
     public virtual void EnemyDeath(int score)
     {
         GameManager.Instance.AddToScore(score);
-        Destroy(gameObject);
         EnemyKilled?.Invoke();
-        // EnemiesOnScreen --;
-        // TotalNumberOfEnemiesKilled ++;
+        Destroy(gameObject);
     }
-
-
     
     public bool IsLookingDown()
     {
-        Vector3 upVector = transform.position - Vector3.up;
+        Vector3 downVector = Vector3.down;
+        //Vector3 upVector = transform.position - Vector3.up;
         //upVector.Normalize();
 
-        Debug.DrawLine(transform.position, upVector, Color.red);
+        //Debug.DrawLine(transform.position, upVector, Color.red);
+        Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
 
         Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
 
-        float angle = Vector3.Angle(transform.up, upVector);
-        Debug.Log("Angle: " + angle);
+        float angle = Vector3.Angle(transform.up, downVector);
+
+        //float angle = Vector3.Angle(transform.up, upVector);
+
+        //Debug.Log("Angle: " + angle);
 
         return angle <= maxAngle;
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(shootCooldown);
+        _canShoot = true;
     }
 
 }

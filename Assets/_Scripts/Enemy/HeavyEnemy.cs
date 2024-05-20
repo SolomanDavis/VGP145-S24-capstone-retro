@@ -1,22 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using static EnemyPathfinding;
 
 public class HeavyEnemy : Enemy
 {
 
-    private int _numberOfHits;
+    public EnemyPathfinding enemyPathfindingState;
+    private int heavyEnemyScore;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
     }
 
-    // Update is called once per frame
-     
-
-
+    void Update()
+    {
+       if(enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
+        { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
+       { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
+       { heavyEnemyScore = 400; }
+    }
 
     /*
      OnTriggerEnter(Collider other): Calls the TakeDamage()
@@ -27,26 +37,30 @@ public class HeavyEnemy : Enemy
 
     //TBC if player projectile is trigger _ TODO (Estelle)
     //TBC player projectile tage name _ TODO (Estelle)
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
-            _numberOfHits++;
             TakeDamage(1);
             UpdateHealthStatus();
         }
     }
 
-    // Tracks _numberOfHits and calls the heavy enemy's ChangeColor().
+    // When EnemyHealt == 1, the Heavy enemy changes color to purple.
     private void UpdateHealthStatus()
     {
-        if (_numberOfHits == 1)
+        if (EnemyHealth == 1)
         {
-            anim.SetInteger("NumberOfHits", _numberOfHits);
+            anim.SetInteger("EnemyHealth", EnemyHealth);
         }
 
     }
-    
+
+    // Calls EnemyDeath with relevant state score
+    public void callDeathWithScore()
+    {
+        EnemyDeath(heavyEnemyScore);
+    }
 
 }
 
