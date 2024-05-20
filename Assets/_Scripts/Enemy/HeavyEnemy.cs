@@ -24,8 +24,10 @@ public class HeavyEnemy : Enemy
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
        if(enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
         { heavyEnemyScore = 150; }
        else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
