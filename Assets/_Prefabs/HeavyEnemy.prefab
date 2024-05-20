@@ -157,8 +157,9 @@ MonoBehaviour:
   EnemyHealth: 2
   enemyProjectile: {fileID: 1457256744320034856, guid: 60b4cb13b5fb1f541af4e90b7889f6f3, type: 3}
   enemyProjectileSpawn: {fileID: 7600162121685525225}
-  projectileSpeed: 2
-  TimeToDestroy: 10
+  projectileSpeed: 10
+  TimeToDestroy: 1
+  shootCooldown: 1
   maxAngle: 45
 --- !u!50 &8041749919635557403
 Rigidbody2D:

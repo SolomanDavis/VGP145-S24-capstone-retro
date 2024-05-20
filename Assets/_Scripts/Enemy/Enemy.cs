@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,12 +14,14 @@ public abstract class Enemy : MonoBehaviour
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
+    [SerializeField] private float shootCooldown = 1f;
 
     public event UnityAction EnemyKilled;
 
     public float maxAngle = 45f;
 
     private bool _isPaused = false;
+    private bool _canShoot = true;
 
     private void Awake()
     {
@@ -31,7 +34,8 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>();                
+        anim = GetComponent<Animator>(); 
+        
     }
 
     // Update is called once per frame
@@ -40,11 +44,14 @@ public abstract class Enemy : MonoBehaviour
         if (_isPaused)
             return;
 
-        if (IsLookingDown())
+        if (IsLookingDown() && _canShoot)
         {
-            Shoot();
+           Shoot();
+            
         }
+        
     }
+    
 
     // TriggerOnAnimationEvent
     public void Shoot()
@@ -53,11 +60,13 @@ public abstract class Enemy : MonoBehaviour
         //at the player with an offset to the left and right (we think....)
         //int RandomNumberOffset = Random.Range(min, max);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
         
-        currentProjectile.speed = projectileSpeed;
+        currentProjectile.bulletSpeed = projectileSpeed;
 
-        currentProjectile.offset = 0;
+        _canShoot = false;
+
+        StartCoroutine(ShootCooldown());
     }
 
     /* public void Shoot(int min, int max)
@@ -92,17 +101,28 @@ public abstract class Enemy : MonoBehaviour
     
     public bool IsLookingDown()
     {
-        Vector3 upVector = transform.position - Vector3.up;
+        Vector3 downVector = Vector3.down;
+        //Vector3 upVector = transform.position - Vector3.up;
         //upVector.Normalize();
 
-        Debug.DrawLine(transform.position, upVector, Color.red);
+        //Debug.DrawLine(transform.position, upVector, Color.red);
+        Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
 
         Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
 
-        float angle = Vector3.Angle(transform.up, upVector);
+        float angle = Vector3.Angle(transform.up, downVector);
+
+        //float angle = Vector3.Angle(transform.up, upVector);
+
         //Debug.Log("Angle: " + angle);
 
         return angle <= maxAngle;
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(shootCooldown);
+        _canShoot = true;
     }
 
 }
