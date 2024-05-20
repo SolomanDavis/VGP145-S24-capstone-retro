@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using static EnemyPathfinding;
 
 public class MediumEnemy : Enemy
 {
+    public EnemyPathfinding enemyPathfindingState;
 
-    //public float fireRate = 1f; // Rate of fire (bullets per second)
-    //public float strafeDistance = 5.0f;
-    //public float strafeDuration = 10f;
     public float currentHealth = 2f;
     public int damageTaken;
     public float moveSpeed;
@@ -19,46 +21,46 @@ public class MediumEnemy : Enemy
     {
         base.Start();
         damageTaken = 0;
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
         //StartCoroutine(Countdown());
     }
 
     //IEnumerator Countdown() //Strafe Timer for Enemies
-        
-        //while (strafeTimer > 0f)
-            //yield return new WaitForSeconds(1f);
-            //strafeTimer--;
-            //Debug.Log("Time remaining until direction change:" + strafeTimer);
+
+    //while (strafeTimer > 0f)
+    //yield return new WaitForSeconds(1f);
+    //strafeTimer--;
+    //Debug.Log("Time remaining until direction change:" + strafeTimer);
 
     //Enemy animations, damage and animations, aim in the direction the enemy is facing, enemy spawning, score
 
     //Placeholder Script for idle animation and change direction
     //private void strafe() //Used to change direction for Strafing
 
-        //if (strafeTimer <= 0)
- 
-            //moveSpeed *= -1; //will change direction of the unit when timer elapses
-            //strafeTimer = 10f;
+    //if (strafeTimer <= 0)
 
-    void OnTriggerEnter(Collider other)
+    //moveSpeed *= -1; //will change direction of the unit when timer elapses
+    //strafeTimer = 10f;
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "PlayerProjectile")
+        base.OnTriggerEnter2D(collision);
+
+        if (collision.gameObject.tag == "PlayerProjectile")
         {
             TakeDamage(1);
-        }
-    }
-
-    private void DeathAnimation()
-    {
-        if (currentHealth == 0)
-        {
-            anim.SetInteger("EnemyHealth", damageTaken);
-            EnemyDeath(80);
-        }
-        else
-        {
-            //if enemy is in diving
-            anim.SetInteger("EnemyHealth", damageTaken);
-            EnemyDeath(160);
+            if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
+            {
+                EnemyDeath(50);
+            }
+            else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
+            {
+                EnemyDeath(50);
+            }
+            else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
+            {
+                EnemyDeath(100);
+            }
         }
     }
 }

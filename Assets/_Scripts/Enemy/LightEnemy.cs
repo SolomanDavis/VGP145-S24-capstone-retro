@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using static EnemyPathfinding;
 
 public class LightEnemy : Enemy
 {
+    public EnemyPathfinding enemyPathfindingState;
 
-    //public float fireRate = 1f; // Rate of fire (bullets per second)
-    //public float strafeDistance = 5.0f;
-    //public float strafeDuration = 10f;
     public float currentHealth = 1f;
     public int damageTaken;
     public float moveSpeed;
@@ -19,6 +22,7 @@ public class LightEnemy : Enemy
     {
         base.Start();
         damageTaken = 0;
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
         //StartCoroutine(Countdown() );
     }
 
@@ -38,28 +42,26 @@ public class LightEnemy : Enemy
             //moveSpeed *= -1; //will change direction of the unit when timer elapses
             //strafeTimer = 10f;
 
-    void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "PlayerProjectile")
-            {
-                damageTaken++;
-                TakeDamage(1);
-            }
-        }
-
-    private void DeathAnimation()
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (currentHealth == 0)
+        base.OnTriggerEnter2D(collision);
+
+        if (collision.gameObject.tag == "PlayerProjectile")
         {
-            anim.SetInteger("EnemyHealth", damageTaken);
-            EnemyDeath(50);
-        }
-        else
-        {
-            //if enemy state is diving
-            anim.SetInteger("EnemyHealth", damageTaken);
-            EnemyDeath(100);
+            damageTaken++;
+            TakeDamage(1);
+            if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
+                {
+                EnemyDeath(50);
+                }
+            else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
+                {
+                    EnemyDeath(50);
+                }
+            else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
+                {
+                    EnemyDeath(100);
+                }
         }
     }
-
 }
