@@ -56,8 +56,9 @@ public class GameManager : SingletonInScene<GameManager>
 
     // GameOver() called when lives are < 0.
     private IEnumerator GameOver()
-    {
+    {        
         yield return new WaitForSeconds(_gameOverWaitTime);
+        HighScoreManager.Instance.SetHighScore(_score);
         CanvasManager.Instance.GameOver();
     }
        
@@ -114,14 +115,17 @@ public class GameManager : SingletonInScene<GameManager>
 
         if (Input.GetKeyDown(KeyCode.N))
         {
-
             AddToScore(10);
         }
+
+
+
     }
 
     // Event handler for when all enemies are killed
     private void OnAllEnemiesKilled()
-    {        
+    {
+        HighScoreManager.Instance.SetHighScore(_score);
         CanvasManager.Instance.GameWon();
     }
 }

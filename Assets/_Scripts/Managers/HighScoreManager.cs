@@ -15,13 +15,15 @@ public class HighScoreManager : Singleton<HighScoreManager>
     }
 
     public int GetHighScore(int _score)
+    {       
+        return _highScore;
+    }
+      
+    public void SetHighScore(int _score)
     {
         if (_score > _highScore)
         {
             _highScore = _score;
         }
-
-        return _highScore;
     }
-      
 }
