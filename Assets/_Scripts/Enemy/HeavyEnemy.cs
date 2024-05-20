@@ -20,6 +20,8 @@ public class HeavyEnemy : Enemy
     {
         base.Start();
         enemyPathfindingState = GetComponent<EnemyPathfinding>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
