@@ -3,9 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using static EnemyPathfinding;
 
 public class HeavyEnemy : Enemy
 {
+
+    private EnemyPathfinding enemyPathfindingState;
+    private int heavyEnemyScore;
+
     [SerializeField] AudioClip enemyHit;
 
     AudioSource audioSource;
@@ -14,6 +19,17 @@ public class HeavyEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
+    }
+
+    void Update()
+    {
+       if(enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
+        { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
+       { heavyEnemyScore = 150; }
+       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
+       { heavyEnemyScore = 400; }
     }
 
     /*
@@ -44,7 +60,12 @@ public class HeavyEnemy : Enemy
         }
 
     }
-    
+
+    // Calls EnemyDeath with relevant state score
+    public void callDeathWithScore()
+    {
+        EnemyDeath(heavyEnemyScore);
+    }
 
 }
 
