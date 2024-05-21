@@ -93,7 +93,6 @@ public class EnemyPathfinding : MonoBehaviour
         {
             HoverStateDuration = Random.Range(MinTimeInHover, MaxTimeInHover); // Added
             HoverStateStartTime = Time.time; // Added
-            Debug.Log($"Entered Hover state. Will remain in hover for {HoverStateDuration} seconds."); // Added
         }
     }
 
@@ -252,8 +251,8 @@ public class EnemyPathfinding : MonoBehaviour
         // Sets final spline point as position
         position = _pointABCDposition;
 
-        // Calculate direction
-        direction = (transform.position - _pointABCDposition);
+        // Calculate direction (negative to ensure enemy is facing the right way)
+        direction = -(transform.position - _pointABCDposition);
         direction.Normalize();
     }
 
