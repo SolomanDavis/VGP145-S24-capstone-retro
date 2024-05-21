@@ -23,6 +23,14 @@ public class EnemyPathfinding : MonoBehaviour
 
     private bool _isPaused = false;
 
+    // SerializeField variables for hover state duration
+    [SerializeField] private float MinTimeInHover = 2.0f; // Added
+    [SerializeField] private float MaxTimeInHover = 5.0f; // Added
+
+    private float HoverStateDuration; // Added
+    private float HoverStateStartTime; // Added
+
+
     public enum PathfindingState
     {
         Entrance,
@@ -61,7 +69,16 @@ public class EnemyPathfinding : MonoBehaviour
 
         // Reset interpolation factor between states to offer best transitions
         _interpFactor = 0;
+       
+        // If entering Hover state, initialize hover state timing
+        if (_state == PathfindingState.Hover) // Added
+        {
+            HoverStateDuration = Random.Range(MinTimeInHover, MaxTimeInHover); // Added
+            HoverStateStartTime = Time.time; // Added
+            Debug.Log($"Entered Hover state. Will remain in hover for {HoverStateDuration} seconds."); // Added
+        }
     }
+
 
     // TODO: ZA - Estelle - DEBUG STATE CHANGER - REMOVE
     private void Update()
@@ -79,7 +96,17 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
 
-        // TODO: ZA - Detect Hover -> Dive state change
+
+
+        // Detect Hover -> Dive state change
+        if (_state == PathfindingState.Hover) // Added
+        {
+            float timeInHover = Time.time - HoverStateStartTime; // Added
+            if (timeInHover >= HoverStateDuration) // Added
+            {
+                SetState(PathfindingState.Dive); // Added
+            }
+        }
     }
 
     // Update is called once per frame
