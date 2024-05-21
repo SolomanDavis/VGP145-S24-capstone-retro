@@ -8,6 +8,8 @@ TagManager:
   - HeavyEnemy
   - Enemy
   - EnemyProjectile
+  - PlayerAreaBoundaryOne
+  - PlayerAreaBoundaryTwo
   - EnemyDeathCollider
   layers:
   - Default
