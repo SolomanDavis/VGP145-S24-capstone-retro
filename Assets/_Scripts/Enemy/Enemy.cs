@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using TMPro;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
+    [SerializeField] private TextMeshPro floatingScoreTextPrefab;
 
     [SerializeField] protected int enemyHealth;
     [SerializeField] private float shootCooldown = 1f;
@@ -119,15 +121,33 @@ public abstract class Enemy : MonoBehaviour
     // Calls EnemyDeath with relevant state score
     public void CallDeathWithScore()
     {
+        int score = GetScoreOnState();
+        EnemyDeath(score);
+    }
+
+    public void ShowFloatingScore()
+    {
+        int score = GetScoreOnState();
+
+        TextMeshPro floatingScore = Instantiate(floatingScoreTextPrefab, transform.position, Quaternion.identity);
+        floatingScore.text = score.ToString();
+        floatingScore.color = new Color(Random.value, Random.value, Random.value);
+
+        Destroy(floatingScore, 0.75f);
+    }
+
+    private int GetScoreOnState()
+    {
         switch (enemyPathfindingState.State)
         {
             case EnemyPathfinding.PathfindingState.Entrance:
             case EnemyPathfinding.PathfindingState.Hover:
-                EnemyDeath(entranceHoverScore);
-                break;
+                return entranceHoverScore;
             case EnemyPathfinding.PathfindingState.Dive:
-                EnemyDeath(diveScore);
-                break;
+                return diveScore;
+            default:
+                Debug.LogWarning("No score set for state: " + enemyPathfindingState.State);
+                return 0;
         }
     }
 }

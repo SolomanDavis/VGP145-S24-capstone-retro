@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyProjectile: {fileID: 7580084555059897653, guid: 60b4cb13b5fb1f541af4e90b7889f6f3, type: 3}
   enemyProjectileSpawn: {fileID: 7600162121685525225}
+  floatingScoreTextPrefab: {fileID: 7077651229443071812, guid: d7bb55eb3edc5954ab5d21355f025a0a, type: 3}
   enemyHealth: 2
   shootCooldown: 1
   entranceHoverScore: 150
