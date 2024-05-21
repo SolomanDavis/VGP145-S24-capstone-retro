@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: -6718338265787161478, guid: 5b827a1df3bc2ec4fac9db7f843dd112, type: 3}
   firePoint: {fileID: 228590334022515372}
-  shootClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 774f9bb19a9c46d49aaaad340e19fc1a, type: 3}
 --- !u!50 &3974118525745430991
 Rigidbody2D:
   serializedVersion: 4
@@ -256,7 +256,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.125
   m_Pitch: 1
   Loop: 0
   Mute: 0
