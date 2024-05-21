@@ -934,7 +934,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_54
+      name: MediumEnemyIdle1
       rect:
         serializedVersion: 2
         x: 10
@@ -955,7 +955,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_55
+      name: MediumEnemyIdle2
       rect:
         serializedVersion: 2
         x: 33
@@ -976,7 +976,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_56
+      name: MediumEnemyMove1
       rect:
         serializedVersion: 2
         x: 59
@@ -997,7 +997,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_57
+      name: MediumEnemyMove2
       rect:
         serializedVersion: 2
         x: 81
@@ -1018,7 +1018,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_58
+      name: MediumEnemyMove3
       rect:
         serializedVersion: 2
         x: 106
@@ -1039,7 +1039,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_59
+      name: MediumEnemyMove4
       rect:
         serializedVersion: 2
         x: 130
@@ -1060,7 +1060,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_60
+      name: MediumEnemyMove5
       rect:
         serializedVersion: 2
         x: 154
@@ -1081,7 +1081,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_61
+      name: MediumEnemyMove6
       rect:
         serializedVersion: 2
         x: 179
@@ -1102,7 +1102,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_65
+      name: LightEnemyIdle1
       rect:
         serializedVersion: 2
         x: 10
@@ -1123,7 +1123,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_66
+      name: LightEnemyIdle2
       rect:
         serializedVersion: 2
         x: 33
@@ -1144,7 +1144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_67
+      name: LightEnemyMove1
       rect:
         serializedVersion: 2
         x: 58
@@ -1165,7 +1165,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_68
+      name: LightEnemyMove2
       rect:
         serializedVersion: 2
         x: 81
@@ -1186,7 +1186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_69
+      name: LightEnemyMove3
       rect:
         serializedVersion: 2
         x: 105
@@ -1207,7 +1207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_70
+      name: LightEnemyMove4
       rect:
         serializedVersion: 2
         x: 130
@@ -1228,7 +1228,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_71
+      name: LightEnemyMove5
       rect:
         serializedVersion: 2
         x: 154
@@ -1249,7 +1249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image_2024-04-18_152227724-removebg-preview_72
+      name: LightEnemyMove6
       rect:
         serializedVersion: 2
         x: 179
@@ -1606,7 +1606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyDteah1
+      name: EnemyDeath1
       rect:
         serializedVersion: 2
         x: 202
@@ -1627,7 +1627,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyDteah2
+      name: EnemyDeath2
       rect:
         serializedVersion: 2
         x: 224
@@ -1648,7 +1648,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyDteah3
+      name: EnemyDeath3
       rect:
         serializedVersion: 2
         x: 249
@@ -1669,7 +1669,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyDteah4
+      name: EnemyDeath4
       rect:
         serializedVersion: 2
         x: 289
@@ -2393,10 +2393,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EnemyDteah1: 51262924
-      EnemyDteah2: 316887352
-      EnemyDteah3: -503866028
-      EnemyDteah4: 1935236751
+      EnemyDeath1: 51262924
+      EnemyDeath2: 316887352
+      EnemyDeath3: -503866028
+      EnemyDeath4: 1935236751
       HeavyEnemy_ Green Turn1: 1814580402
       HeavyEnemy_ Green Turn2: -1421753048
       HeavyEnemy_ Green Turn3: -1948881254
@@ -2413,6 +2413,14 @@ TextureImporter:
       HeavyEnemy_Purple Turn4: 686859360
       HeavyEnemy_Purple Turn5: -267028562
       HeavyEnemy_Purple Turn6: -1416582526
+      MediumEnemyIdle1: 272689246
+      MediumEnemyIdle2: 383487188
+      MediumEnemyMove1: 1188536349
+      MediumEnemyMove2: -1772623484
+      MediumEnemyMove3: 181601021
+      MediumEnemyMove4: -1514828517
+      MediumEnemyMove5: 1097064253
+      MediumEnemyMove6: 650885349
       Player: 102847094
       Projectile: 673985216
       image_2024-04-18_152227724-removebg-preview_0: -374349775
@@ -2481,26 +2489,10 @@ TextureImporter:
       image_2024-04-18_152227724-removebg-preview_51: -342116927
       image_2024-04-18_152227724-removebg-preview_52: -774075968
       image_2024-04-18_152227724-removebg-preview_53: -312705031
-      image_2024-04-18_152227724-removebg-preview_54: 272689246
-      image_2024-04-18_152227724-removebg-preview_55: 383487188
-      image_2024-04-18_152227724-removebg-preview_56: 1188536349
-      image_2024-04-18_152227724-removebg-preview_57: -1772623484
-      image_2024-04-18_152227724-removebg-preview_58: 181601021
-      image_2024-04-18_152227724-removebg-preview_59: -1514828517
-      image_2024-04-18_152227724-removebg-preview_60: 1097064253
-      image_2024-04-18_152227724-removebg-preview_61: 650885349
       image_2024-04-18_152227724-removebg-preview_62: -1665034765
       image_2024-04-18_152227724-removebg-preview_63: 832949100
       image_2024-04-18_152227724-removebg-preview_64: -220639780
-      image_2024-04-18_152227724-removebg-preview_65: 286268200
-      image_2024-04-18_152227724-removebg-preview_66: 659387295
-      image_2024-04-18_152227724-removebg-preview_67: -946842463
-      image_2024-04-18_152227724-removebg-preview_68: -932263762
-      image_2024-04-18_152227724-removebg-preview_69: 101348426
       image_2024-04-18_152227724-removebg-preview_7: -63729979
-      image_2024-04-18_152227724-removebg-preview_70: 838890037
-      image_2024-04-18_152227724-removebg-preview_71: 249681207
-      image_2024-04-18_152227724-removebg-preview_72: 1988113675
       image_2024-04-18_152227724-removebg-preview_73: -2062524697
       image_2024-04-18_152227724-removebg-preview_74: 970874609
       image_2024-04-18_152227724-removebg-preview_76: 1444964122
