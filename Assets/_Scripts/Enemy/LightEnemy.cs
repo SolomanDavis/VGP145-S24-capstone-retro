@@ -14,10 +14,6 @@ public class LightEnemy : Enemy
     public int damageTaken;
     public float moveSpeed;
 
-    //private float nextFireTime; // Time of the next fire
-    //private bool movingRight = true; //Moving to the right
-    //private float strafeTimer = 10f;
-
     protected override void Start()
     {
         base.Start();
@@ -46,7 +42,7 @@ public class LightEnemy : Enemy
     {
         base.OnTriggerEnter2D(collision);
 
-        if (collision.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             damageTaken++;
             TakeDamage(1);
