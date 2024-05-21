@@ -10,6 +10,7 @@ TagManager:
   - EnemyProjectile
   - PlayerAreaBoundaryOne
   - PlayerAreaBoundaryTwo
+  - EnemyDeathCollider
   layers:
   - Default
   - TransparentFX
