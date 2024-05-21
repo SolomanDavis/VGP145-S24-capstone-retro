@@ -131,7 +131,6 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("EnemyDeathCollider"))
         {
             EnemyDeath(0); 
-            Destroy(gameObject);
         }
     }
 
