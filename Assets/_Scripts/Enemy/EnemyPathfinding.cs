@@ -11,7 +11,6 @@ public class EnemyPathfinding : MonoBehaviour
     private float _interpFactor = 0.0f;
 
     // ENTRANCE PATHFINDING
-
     // Container containing splines that define predefined paths
     private SplineContainer _splineContainer;
 
@@ -29,7 +28,6 @@ public class EnemyPathfinding : MonoBehaviour
 
     private float HoverStateDuration; // Added
     private float HoverStateStartTime; // Added
-
 
     public enum PathfindingState
     {
@@ -64,7 +62,6 @@ public class EnemyPathfinding : MonoBehaviour
 
     // isDiving used in dive_state
     private bool isDiving = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -117,15 +114,13 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
 
-
-
         // Detect Hover -> Dive state change
-        if (_state == PathfindingState.Hover) // Added
+        if (_state == PathfindingState.Hover)
         {
-            float timeInHover = Time.time - HoverStateStartTime; // Added
-            if (timeInHover >= HoverStateDuration) // Added
+            float timeInHover = Time.time - HoverStateStartTime;
+            if (timeInHover >= HoverStateDuration)
             {
-                SetState(PathfindingState.Dive); // Added
+                SetState(PathfindingState.Dive);
             }
         }
     }
@@ -224,15 +219,11 @@ public class EnemyPathfinding : MonoBehaviour
         
         if (isDiving == false)
         {
-            // TODO: Remove when Diving is automatically implemented. Uncomment to test.
-            // _interpFactor = 0f;
-
             // Generate random points A - D for dive spline
             _pointA = transform.position;
             _pointD = generatePointD(transform.position.x, transform.position.y, transform.position.z);
             _pointB = generatePointB(transform.position.x, transform.position.y, transform.position.z);
             _pointC = generatePointC(transform.position.x, transform.position.y, transform.position.z);
-
 
             // Determines if the dive will start left or right.
             float flip = Random.Range(-1, 1);
@@ -244,12 +235,7 @@ public class EnemyPathfinding : MonoBehaviour
             }
            
             isDiving = true;                     
-
         }
-
-        //Orgiginal
-        //position = Vector3.zero;
-        //direction = Vector3.zero;
         
         CalculateInterpolationFactor();             
 
@@ -302,5 +288,4 @@ public class EnemyPathfinding : MonoBehaviour
         Vector3 randomPointD = new Vector3 (newPosition_X, newPosition_Y, Position_Z);
         return randomPointD;
     }
-
 }

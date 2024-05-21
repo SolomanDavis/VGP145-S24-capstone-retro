@@ -1,26 +1,27 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using UnityEditor.ShaderKeywordFilter;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public event UnityAction EnemyKilled;
+
     protected SpriteRenderer sr;
     protected Rigidbody2D rb;
     protected BoxCollider2D bc;
     protected Animator anim;
-    AudioSource audioSource;
+    protected AudioSource audioSource;
 
-    [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
-    [SerializeField] private int projectileSpeed;
-    public float TimeToDestroy = 1;
-    [SerializeField] AudioClip enemydeath;
-    [SerializeField] private float shootCooldown = 1f;
-    public event UnityAction EnemyKilled;
 
-    public float maxAngle = 45f;
+    [SerializeField] protected int enemyHealth;
+    [SerializeField] private int projectileSpeed;
+    [SerializeField] private float shootCooldown = 1f;
+
+    [SerializeField] AudioClip EnemyDeathClip;
+
+    public float isLookingDownMaxAngle = 45f;
 
     private bool _isPaused = false;
     private bool _canShoot = true;
@@ -57,37 +58,20 @@ public abstract class Enemy : MonoBehaviour
     // TriggerOnAnimationEvent
     public void Shoot()
     {
-        //This offset will allow the enemy script to choose to fire the projectile
-        //at the player with an offset to the left and right (we think....)
-        //int RandomNumberOffset = Random.Range(min, max);
-
         EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
-        
         currentProjectile.bulletSpeed = projectileSpeed;
 
+        // Initiate cooldown
         StartCoroutine(ShootCooldown());
-        
     }
-
-    /* public void Shoot(int min, int max)
-    {
-        //This offset will allow the enemy script to choose to fire the projectile
-        //at the player with an offset to the left and right (we think....)
-        int RandomNumberOffset = Random.Range(min, max);
-
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
-        currentProjectile.speed = projectileSpeed;
-        currentProjectile.offset = RandomNumberOffset;
-    }*/
 
     public virtual void TakeDamage(int damage)
     {
-        EnemyHealth -= damage;
-        if (EnemyHealth <= 0)
+        enemyHealth -= damage;
+        if (enemyHealth <= 0)
         {
             anim.SetTrigger("IsDead");
-
-            audioSource.PlayOneShot(enemydeath);
+            audioSource.PlayOneShot(EnemyDeathClip);
 
             bc.enabled = false; // Turn off box collider to prevent further damage
         }
@@ -104,16 +88,9 @@ public abstract class Enemy : MonoBehaviour
     public bool IsLookingDown()
     {
        Vector3 downVector = Vector3.down;
-      
-        //Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
+       float angle = Vector3.Angle(transform.up, downVector);
 
-       // Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
-
-        float angle = Vector3.Angle(transform.up, downVector);
-
-        //Debug.Log("Angle: " + angle);
-
-        return angle <= maxAngle;
+       return angle <= isLookingDownMaxAngle;
     }
 
     private IEnumerator ShootCooldown()
