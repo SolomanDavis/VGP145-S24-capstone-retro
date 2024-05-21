@@ -92,6 +92,9 @@ public class GameManager : SingletonInScene<GameManager>
 
         CanvasManager.Instance.UpdateLifeImage(Lives);
         EnemyManager.Instance.Restart();
+        DestroyProjectiles();
+
+        // Clean and spawn new player
         DestroyPlayer();
         StartCoroutine(SpawnPlayer(PlayerSpawnLocation));
     }
@@ -102,6 +105,15 @@ public class GameManager : SingletonInScene<GameManager>
         for (int i = 0; i < players.Length; ++i)
         {
             Destroy(players[i].gameObject);
+        }
+    }
+
+    private void DestroyProjectiles()
+    {
+        Projectile[] projectiles = FindObjectsByType<Projectile>(FindObjectsSortMode.None);
+        for (int i = 0; i < projectiles.Length; ++i)
+        {
+            Destroy(projectiles[i].gameObject);
         }
     }
 
