@@ -10,6 +10,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     // Events for other game systems to listen to
     public event UnityAction GamePaused; // Other game systems should pause their activities if applicable
     public event UnityAction GameUnpaused; // Other game systems should resume their activities if applicable
+   
 
     [Header("Button")]
     public Button StartButton;
@@ -141,6 +142,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         GameOverText.enabled = false;
         WinText.enabled = true;
         GamePaused?.Invoke();
+        
     }
 
     public void GameOver()
@@ -149,6 +151,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         WinText.enabled = false;
         GameOverText.enabled = true;
         GamePaused?.Invoke();
+        
     }
 
     public void UpdateLifeImage(int lives)

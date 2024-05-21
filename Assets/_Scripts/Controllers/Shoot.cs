@@ -7,14 +7,17 @@ public class Shoot : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab; // Prefab of the bullet GameObject
     [SerializeField] private Transform firePoint; // Point where the bullet will be spawned
     [SerializeField] private float bulletSpeed = 10f; // Speed of the bullet
+    [SerializeField] AudioClip playerShoot;
 
     private bool _isPaused = false;
+    
 
     private void Awake()
     {
         CanvasManager.Instance.GamePaused += () => _isPaused = true;
         CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
     }
+   
 
     private void Update()
     {
@@ -37,5 +40,8 @@ public class Shoot : MonoBehaviour
 
         // Apply velocity to the bullet (upward)
         rb.velocity = Vector2.up * bulletSpeed;
+
+        if (playerShoot)
+            GetComponent<AudioSource>().PlayOneShot(playerShoot);
     }
 }

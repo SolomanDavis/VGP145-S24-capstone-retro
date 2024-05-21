@@ -1,6 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
+using UnityEditor.ShaderKeywordFilter;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -8,14 +9,15 @@ public abstract class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected BoxCollider2D bc;
     protected Animator anim;
-    
+    AudioSource audioSource;
+
     [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
     [SerializeField] private int projectileSpeed;
     public float TimeToDestroy = 1;
+    [SerializeField] AudioClip enemydeath;
     [SerializeField] private float shootCooldown = 1f;
-
     public event UnityAction EnemyKilled;
 
     public float maxAngle = 45f;
@@ -27,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
     {
         CanvasManager.Instance.GamePaused += () => _isPaused = true;
         CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
+
     }
 
     protected virtual void Start()
@@ -34,24 +37,22 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>(); 
-        
+        anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (_isPaused)
             return;
 
         if (IsLookingDown() && _canShoot)
         {
-           Shoot();
             
+            Shoot();
         }
-        
     }
-    
 
     // TriggerOnAnimationEvent
     public void Shoot()
@@ -64,9 +65,8 @@ public abstract class Enemy : MonoBehaviour
         
         currentProjectile.bulletSpeed = projectileSpeed;
 
-        _canShoot = false;
-
         StartCoroutine(ShootCooldown());
+        
     }
 
     /* public void Shoot(int min, int max)
@@ -87,6 +87,8 @@ public abstract class Enemy : MonoBehaviour
         {
             anim.SetTrigger("IsDead");
 
+            audioSource.PlayOneShot(enemydeath);
+
             bc.enabled = false; // Turn off box collider to prevent further damage
         }
     }
@@ -98,21 +100,16 @@ public abstract class Enemy : MonoBehaviour
         EnemyKilled?.Invoke();
         Destroy(gameObject);
     }
-    
+
     public bool IsLookingDown()
     {
-        Vector3 downVector = Vector3.down;
-        //Vector3 upVector = transform.position - Vector3.up;
-        //upVector.Normalize();
+       Vector3 downVector = Vector3.down;
+      
+        //Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
 
-        //Debug.DrawLine(transform.position, upVector, Color.red);
-        Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
-
-        Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
+       // Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
 
         float angle = Vector3.Angle(transform.up, downVector);
-
-        //float angle = Vector3.Angle(transform.up, upVector);
 
         //Debug.Log("Angle: " + angle);
 
@@ -121,10 +118,12 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator ShootCooldown()
     {
+        _canShoot = false;
+
         yield return new WaitForSeconds(shootCooldown);
+
         _canShoot = true;
     }
-
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -133,6 +132,4 @@ public abstract class Enemy : MonoBehaviour
             EnemyDeath(0); 
         }
     }
-
-
 }
