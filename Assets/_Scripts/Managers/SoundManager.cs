@@ -1,31 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    public static SoundManager instance;
+    public AudioClip[] backgroundMusic;
+    public AudioClip sceneStartSound;
 
-    public AudioSource musicSource;
-    public AudioSource effectsSource;
+    private AudioSource audioSource;
 
-    public AudioClip backgroundMusic;
-
-    private void Awake()
+    protected override void Awake()
     {
-        
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        base.Awake();
+
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.loop = true; //Used to loop the audio
+        SceneManager.sceneLoaded += OnSceneLoaded; 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        int sceneIndex = scene.buildIndex; //Gets the index of the scene, (Title being 0, Game being 1. Order can be found in File> BuildSettings)
+
+        if (sceneIndex < backgroundMusic.Length && backgroundMusic[sceneIndex] != null) //Used to check that the Scene index corresponds wit the array for the music
+        {
+            audioSource.clip = backgroundMusic[sceneIndex]; //Used to ensure that the corresponding track plays
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("No music assigned for scene index: " + sceneIndex);
+        }
+
+        if (scene.name == "Game") //Unused but want to play a certain sound upon the scene loading. Need to find way to designate another audio clip within same component.
+        {
+            audioSource.PlayOneShot(sceneStartSound);
+        }
     }
+} //AudioSource destroyed on load of Game Scene
 
-
-}

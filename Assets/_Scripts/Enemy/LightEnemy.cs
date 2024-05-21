@@ -11,7 +11,7 @@ public class LightEnemy : Enemy
     {
         base.OnTriggerEnter2D(collision);
 
-        if (collision.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             TakeDamage(2);
         }
