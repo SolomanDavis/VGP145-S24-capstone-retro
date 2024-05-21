@@ -44,6 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe9e7bd56c8cb643a2d149a7ecdbf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundMusic:
-  - {fileID: 8300000, guid: ab47f9c6d4d71c74a9695b188dca18bf, type: 3}
-  - {fileID: 8300000, guid: adedfe0367ad1cd468fd805366f11f5f, type: 3}

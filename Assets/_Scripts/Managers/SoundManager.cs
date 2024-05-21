@@ -1,29 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    [SerializeField]
-    private AudioClip[] backgroundMusic;
-    private AudioClip sceneStartSound;
+    public AudioClip[] backgroundMusic;
+    public AudioClip sceneStartSound;
 
     private AudioSource audioSource;
 
-    private void Awake()
+    void Awake()
     {
-        if (FindObjectsOfType<SoundManager>().Length > 1) //Destroys other Objects with the SoundManager Script if more than 1 is present
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-        //Ensures the AudioSource component is present, even when not assigned
         audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
 
         audioSource.loop = true; //Used to loop the audio
         SceneManager.sceneLoaded += OnSceneLoaded; 
@@ -48,5 +35,5 @@ public class SoundManager : MonoBehaviour
             audioSource.PlayOneShot(sceneStartSound);
         }
     }
-}
+} //AudioSource destroyed on load of Game Scene
 
