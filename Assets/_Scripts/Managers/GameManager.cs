@@ -117,20 +117,6 @@ public class GameManager : SingletonInScene<GameManager>
         }
     }
 
-    //Added to test game over menu. 
-    protected override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Lives -= 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            AddToScore(10);
-        }
-    }
-
     // Event handler for when all enemies are killed
     private void OnAllEnemiesKilled()
     {
