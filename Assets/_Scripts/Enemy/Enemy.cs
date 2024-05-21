@@ -11,13 +11,15 @@ public abstract class Enemy : MonoBehaviour
     protected BoxCollider2D bc;
     protected Animator anim;
     protected AudioSource audioSource;
+    protected EnemyPathfinding enemyPathfindingState;
 
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
 
     [SerializeField] protected int enemyHealth;
-    [SerializeField] private int projectileSpeed;
     [SerializeField] private float shootCooldown = 1f;
+    [SerializeField] private int entranceHoverScore;
+    [SerializeField] private int diveScore;
 
     [SerializeField] AudioClip EnemyDeathClip;
 
@@ -40,6 +42,7 @@ public abstract class Enemy : MonoBehaviour
         bc = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
     }
 
     // Update is called once per frame
@@ -58,8 +61,7 @@ public abstract class Enemy : MonoBehaviour
     // TriggerOnAnimationEvent
     public void Shoot()
     {
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
-        currentProjectile.bulletSpeed = projectileSpeed;
+        Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
 
         // Initiate cooldown
         StartCoroutine(ShootCooldown());
@@ -107,6 +109,21 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("EnemyDeathCollider"))
         {
             EnemyDeath(0); 
+        }
+    }
+
+    // Calls EnemyDeath with relevant state score
+    public void CallDeathWithScore()
+    {
+        switch (enemyPathfindingState.State)
+        {
+            case EnemyPathfinding.PathfindingState.Entrance:
+            case EnemyPathfinding.PathfindingState.Hover:
+                EnemyDeath(entranceHoverScore);
+                break;
+            case EnemyPathfinding.PathfindingState.Dive:
+                EnemyDeath(diveScore);
+                break;
         }
     }
 }

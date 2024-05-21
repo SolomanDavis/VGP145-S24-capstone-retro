@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab; // Prefab of the bullet GameObject
+    [SerializeField] private Projectile bulletPrefab; // Prefab of the bullet GameObject
     [SerializeField] private Transform firePoint; // Point where the bullet will be spawned
-    [SerializeField] private float bulletSpeed = 10f; // Speed of the bullet
-    [SerializeField] AudioClip playerShoot;
+    [SerializeField] AudioClip playerShootClip;
 
     private bool _isPaused = false;
     
@@ -26,22 +25,16 @@ public class Shoot : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            fire();
+            Fire();
         }
     }
 
-    void fire()
+    void Fire()
     {
         // Instantiate a bullet at the firePoint position
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        // Get the Rigidbody2D component of the bullet
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
-        // Apply velocity to the bullet (upward)
-        rb.velocity = Vector2.up * bulletSpeed;
-
-        if (playerShoot)
-            GetComponent<AudioSource>().PlayOneShot(playerShoot);
+        if (playerShootClip)
+            GetComponent<AudioSource>().PlayOneShot(playerShootClip);
     }
 }

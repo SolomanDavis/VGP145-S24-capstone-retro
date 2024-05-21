@@ -134,10 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f089d41b7a5ca4991b48cf83b84f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2229014237943324433, guid: 5b827a1df3bc2ec4fac9db7f843dd112, type: 3}
+  bulletPrefab: {fileID: -6718338265787161478, guid: 5b827a1df3bc2ec4fac9db7f843dd112, type: 3}
   firePoint: {fileID: 228590334022515372}
-  bulletSpeed: 10
-  playerShoot: {fileID: 8300000, guid: 774f9bb19a9c46d49aaaad340e19fc1a, type: 3}
+  playerShootClip: {fileID: 8300000, guid: 774f9bb19a9c46d49aaaad340e19fc1a, type: 3}
 --- !u!50 &3974118525745430991
 Rigidbody2D:
   serializedVersion: 4

@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class HeavyEnemy : Enemy
 {
-    private EnemyPathfinding enemyPathfindingState;
-  
     [SerializeField] AudioClip EnemyHitClip;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
-        enemyPathfindingState = GetComponent<EnemyPathfinding>();
-        audioSource = GetComponent<AudioSource>();
     }
      
     /*
@@ -32,28 +27,13 @@ public class HeavyEnemy : Enemy
         }
     }
 
-    // When EnemyHealt == 1, the Heavy enemy changes color to purple.
+    // When enemyHealth == 1, the Heavy enemy changes color to purple.
     private void UpdateHealthStatus()
     {
         if (enemyHealth == 1)
         {
             anim.SetInteger("EnemyHealth", enemyHealth);
             audioSource.PlayOneShot(EnemyHitClip);
-        }
-    }
-
-    // Calls EnemyDeath with relevant state score
-    public void callDeathWithScore()
-    {
-        switch (enemyPathfindingState.State)
-        {
-            case EnemyPathfinding.PathfindingState.Entrance:
-            case EnemyPathfinding.PathfindingState.Hover:
-                EnemyDeath(150);
-                break;
-            case EnemyPathfinding.PathfindingState.Dive:
-                EnemyDeath(400);
-                break;
         }
     }
 }
