@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpawnLocation: {fileID: 1680092206}
-  PlayerPrefab: {fileID: 6196345661194748832, guid: 9109c43e27ee9554d8f61641c5d13594, type: 3}
+  PlayerPrefab: {fileID: 86607088212544544, guid: 9109c43e27ee9554d8f61641c5d13594, type: 3}
   _spawnPlayerWaitTime: 1.2
   _gameOverWaitTime: 1.2
 --- !u!4 &326873322
@@ -982,7 +982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -27.9}
+  m_AnchoredPosition: {x: 0, y: -27.900024}
   m_SizeDelta: {x: 383.98, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &978652844

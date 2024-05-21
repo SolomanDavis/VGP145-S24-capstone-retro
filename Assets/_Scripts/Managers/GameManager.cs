@@ -6,11 +6,13 @@ public class GameManager : SingletonInScene<GameManager>
 {
     // Player spawn location and Player prefab
     [SerializeField] public Transform PlayerSpawnLocation;
-    [SerializeField] public GameObject PlayerPrefab;
+    [SerializeField] public PlayerController PlayerPrefab;
 
     [SerializeField] private float _spawnPlayerWaitTime = 2.0f;
     [SerializeField] private float _gameOverWaitTime = 2.0f;
-               
+
+    public PlayerController PlayerInstance => playerInstance;
+    PlayerController playerInstance = null;
 
     private int _score;
     public int Score => _score;
@@ -51,7 +53,7 @@ public class GameManager : SingletonInScene<GameManager>
     private IEnumerator SpawnPlayer(Transform location)
     {
         yield return new WaitForSeconds(_spawnPlayerWaitTime);
-        Instantiate(PlayerPrefab, location.transform.position, Quaternion.identity);
+       playerInstance = Instantiate(PlayerPrefab, location.transform.position, Quaternion.identity);
     }
 
     // GameOver() called when lives are < 0.

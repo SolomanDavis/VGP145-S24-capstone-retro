@@ -50,35 +50,25 @@ public abstract class Enemy : MonoBehaviour
         if (IsLookingDown() && _canShoot)
         {
             
-            Shoot();
+            Shoot(0, 0);
         }
     }
 
     // TriggerOnAnimationEvent
-    public void Shoot()
-    {
-        //This offset will allow the enemy script to choose to fire the projectile
-        //at the player with an offset to the left and right (we think....)
-        //int RandomNumberOffset = Random.Range(min, max);
-
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
-        
-        currentProjectile.bulletSpeed = projectileSpeed;
-
-        StartCoroutine(ShootCooldown());
-        
-    }
-
-    /* public void Shoot(int min, int max)
+    public void Shoot(int min, int max)
     {
         //This offset will allow the enemy script to choose to fire the projectile
         //at the player with an offset to the left and right (we think....)
         int RandomNumberOffset = Random.Range(min, max);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
-        currentProjectile.speed = projectileSpeed;
+        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
+
+        currentProjectile.bulletSpeed = projectileSpeed;
+
         currentProjectile.offset = RandomNumberOffset;
-    }*/
+
+        StartCoroutine(ShootCooldown());
+    }
 
     public virtual void TakeDamage(int damage)
     {
