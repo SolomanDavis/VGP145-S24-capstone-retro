@@ -9,8 +9,11 @@ public class PlayerController : MonoBehaviour
 {
     private Animator animator;
     private BoxCollider2D bc;
+    AudioSource audioSource;
+
 
     [SerializeField] private float moveSpeed = 5f; // Speed of player movement
+    [SerializeField] AudioClip playerDeath;
 
     private bool _isPaused = false;
 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         // Get the Animator component attached to the GameObject
         animator = GetComponent<Animator>();
         bc = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -52,6 +56,7 @@ public class PlayerController : MonoBehaviour
             bc.enabled = false;
 
             animator.SetTrigger("Die");
+            audioSource.PlayOneShot(playerDeath);
         }
     }
 

@@ -10,6 +10,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
     // Events for other game systems to listen to
     public event UnityAction GamePaused; // Other game systems should pause their activities if applicable
     public event UnityAction GameUnpaused; // Other game systems should resume their activities if applicable
+   
 
     [Header("Button")]
     public Button StartButton;
@@ -46,7 +47,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
             StartButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Game"));
 
             // This needs to be here so that when the game ends and the player returns to the main menu, then presses start again, the game is set back to the beginning. 
-            // StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
+            //StartButton.onClick.AddListener(() => GameManager.Instance.RestartGame());
         }
 
         if (GameOverQuitButton || PauseQuitButton)
@@ -130,7 +131,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         //setting high-score text.
         if (HighScoreText)
         {
-            HighScoreText.text = GameManager.Instance.HighScore(GameManager.Instance.Score).ToString();
+            HighScoreText.text = HighScoreManager.Instance.GetHighScore(GameManager.Instance.Score).ToString();
         }
     }
 
@@ -141,6 +142,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         GameOverText.enabled = false;
         WinText.enabled = true;
         GamePaused?.Invoke();
+        
     }
 
     public void GameOver()
@@ -149,6 +151,7 @@ public class CanvasManager : SingletonInScene<CanvasManager>
         WinText.enabled = false;
         GameOverText.enabled = true;
         GamePaused?.Invoke();
+        
     }
 
     public void UpdateLifeImage(int lives)
