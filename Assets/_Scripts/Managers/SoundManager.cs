@@ -8,8 +8,10 @@ public class SoundManager : Singleton<SoundManager>
 
     private AudioSource audioSource;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         audioSource = GetComponent<AudioSource>();
 
         audioSource.loop = true; //Used to loop the audio
