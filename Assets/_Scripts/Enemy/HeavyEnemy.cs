@@ -23,19 +23,7 @@ public class HeavyEnemy : Enemy
 
         audioSource = GetComponent<AudioSource>();
     }
-
-    protected override void Update()
-    {
-        base.Update();
-
-       if(enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
-        { heavyEnemyScore = 150; }
-       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
-       { heavyEnemyScore = 150; }
-       else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
-       { heavyEnemyScore = 400; }
-    }
-
+     
     /*
      OnTriggerEnter(Collider other): Calls the TakeDamage()
      when the enemy has a collision with the player's prjectile.
@@ -70,7 +58,18 @@ public class HeavyEnemy : Enemy
     // Calls EnemyDeath with relevant state score
     public void callDeathWithScore()
     {
-        EnemyDeath(heavyEnemyScore);
+
+        switch (enemyPathfindingState.State)
+        {
+            case EnemyPathfinding.PathfindingState.Entrance:
+            case EnemyPathfinding.PathfindingState.Hover:
+                EnemyDeath(150);
+                break;
+            case EnemyPathfinding.PathfindingState.Dive:
+                EnemyDeath(400);
+                break;
+        }
+        
     }
 
 }
