@@ -108,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1471467457
+  m_SortingLayerID: -1480949323
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 179000836, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
@@ -160,10 +160,8 @@ MonoBehaviour:
   enemyProjectileSpawn: {fileID: 7600162121685525225}
   projectileSpeed: 10
   TimeToDestroy: 1
-  shootCooldown: 1
-  projectileSpeed: 2
-  TimeToDestroy: 10
   enemydeath: {fileID: 8300000, guid: b569fee8e2605ce488487c31dd98da2f, type: 3}
+  shootCooldown: 1
   maxAngle: 45
   enemyHit: {fileID: 8300000, guid: ee1cd60fba5bf304fa58df0f08901842, type: 3}
 --- !u!50 &8041749919635557403
@@ -251,15 +249,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedAlongPath: 0.5
+  MinTimeInHover: 2
+  MaxTimeInHover: 5
   _state: 0
-  _pointA: {x: 0, y: 0, z: 0}
-  _pointB: {x: 0, y: 0, z: 0}
-  _pointC: {x: 0, y: 0, z: 0}
-  _pointD: {x: 0, y: 0, z: 0}
   diveXMinRange: 10
   diveXMaxRange: 14
   diveYRange: 8
-  isDiving: 0
 --- !u!82 &-3486246868741393134
 AudioSource:
   m_ObjectHideFlags: 0

@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1471467457
+  m_SortingLayerID: -1480949323
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 272689246, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
@@ -124,10 +124,10 @@ MonoBehaviour:
   enemyProjectileSpawn: {fileID: 0}
   projectileSpeed: 0
   TimeToDestroy: 1
+  enemydeath: {fileID: 0}
+  shootCooldown: 1
   maxAngle: 45
-  fireRate: 1
-  strafeDistance: 5
-  strafeDuration: 10
+  enemyPathfindingState: {fileID: 0}
   currentHealth: 2
   damageTaken: 0
   moveSpeed: 0
