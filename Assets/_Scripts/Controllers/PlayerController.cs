@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         // Player movement
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
         transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
 
         // if the player's transform.x is == to areaBoundaryOne then ensure that the player does not move past it, left off scren.

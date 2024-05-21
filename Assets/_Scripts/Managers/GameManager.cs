@@ -129,9 +129,6 @@ public class GameManager : SingletonInScene<GameManager>
         {
             AddToScore(10);
         }
-
-
-
     }
 
     // Event handler for when all enemies are killed

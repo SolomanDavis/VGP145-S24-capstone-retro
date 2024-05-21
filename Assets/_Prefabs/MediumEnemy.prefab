@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedAlongPath: 0.5
-  MinTimeInHover: 2
-  MaxTimeInHover: 5
+  MinTimeInHover: 4
+  MaxTimeInHover: 6
   _state: 0
   diveXMinRange: 10
   diveXMaxRange: 14
