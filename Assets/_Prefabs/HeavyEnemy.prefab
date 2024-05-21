@@ -158,12 +158,10 @@ MonoBehaviour:
   EnemyHealth: 2
   enemyProjectile: {fileID: 1457256744320034856, guid: 60b4cb13b5fb1f541af4e90b7889f6f3, type: 3}
   enemyProjectileSpawn: {fileID: 7600162121685525225}
-  projectileSpeed: 10
+  projectileSpeed: 5
   TimeToDestroy: 1
-  shootCooldown: 1
-  projectileSpeed: 2
-  TimeToDestroy: 10
   enemydeath: {fileID: 8300000, guid: b569fee8e2605ce488487c31dd98da2f, type: 3}
+  shootCooldown: 1
   maxAngle: 45
   enemyHit: {fileID: 8300000, guid: ee1cd60fba5bf304fa58df0f08901842, type: 3}
 --- !u!50 &8041749919635557403
@@ -252,14 +250,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedAlongPath: 0.5
   _state: 0
-  _pointA: {x: 0, y: 0, z: 0}
-  _pointB: {x: 0, y: 0, z: 0}
-  _pointC: {x: 0, y: 0, z: 0}
-  _pointD: {x: 0, y: 0, z: 0}
   diveXMinRange: 10
   diveXMaxRange: 14
   diveYRange: 8
-  isDiving: 0
 --- !u!82 &-3486246868741393134
 AudioSource:
   m_ObjectHideFlags: 0
