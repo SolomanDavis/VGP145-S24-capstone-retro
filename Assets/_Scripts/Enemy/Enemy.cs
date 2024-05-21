@@ -53,7 +53,6 @@ public abstract class Enemy : MonoBehaviour
 
         if (IsLookingDown() && _canShoot)
         {
-            
             Shoot();
         }
     }
@@ -76,6 +75,7 @@ public abstract class Enemy : MonoBehaviour
             audioSource.PlayOneShot(EnemyDeathClip);
 
             bc.enabled = false; // Turn off box collider to prevent further damage
+            _canShoot = false; // Prevent shooting after death
         }
     }
 
@@ -101,7 +101,11 @@ public abstract class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(shootCooldown);
 
-        _canShoot = true;
+        // If enemy is still alive, allow shooting again
+        if (enemyHealth > 0)
+        {
+            _canShoot = true;
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
