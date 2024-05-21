@@ -9,8 +9,7 @@ public class HeavyEnemy : Enemy
 {
 
     private EnemyPathfinding enemyPathfindingState;
-    private int heavyEnemyScore;
-
+  
     [SerializeField] AudioClip enemyHit;
 
     AudioSource audioSource;
