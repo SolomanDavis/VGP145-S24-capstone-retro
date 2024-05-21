@@ -9,17 +9,15 @@ public class MediumEnemy : Enemy
 {
     public EnemyPathfinding enemyPathfindingState;
 
-    public float currentHealth = 2f;
-    public int damageTaken;
-    public float moveSpeed;
-
-    //private float strafeTimer = 10f;
+    [SerializeField] AudioClip enemyHit;
+    AudioSource audioSource;
 
     protected override void Start()
     {
         base.Start();
-        damageTaken = 0;
         enemyPathfindingState = GetComponent<EnemyPathfinding>();
+
+        audioSource = GetComponent<AudioSource>();
         //StartCoroutine(Countdown());
     }
 
@@ -49,16 +47,17 @@ public class MediumEnemy : Enemy
             TakeDamage(1);
             if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
             {
-                EnemyDeath(50);
+                EnemyDeath(80);
             }
             else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Hover)
             {
-                EnemyDeath(50);
+                EnemyDeath(80);
             }
             else if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Dive)
             {
-                EnemyDeath(100);
+                EnemyDeath(160);
             }
         }
+        audioSource.PlayOneShot(enemyHit);
     }
 }

@@ -10,15 +10,15 @@ public class LightEnemy : Enemy
 {
     public EnemyPathfinding enemyPathfindingState;
 
-    public float currentHealth = 1f;
-    public int damageTaken;
-    public float moveSpeed;
+    [SerializeField] AudioClip enemyHit;
+    AudioSource audioSource;
 
     protected override void Start()
     {
         base.Start();
-        damageTaken = 0;
         enemyPathfindingState = GetComponent<EnemyPathfinding>();
+
+        audioSource = GetComponent<AudioSource>();
         //StartCoroutine(Countdown() );
     }
 
@@ -44,7 +44,6 @@ public class LightEnemy : Enemy
 
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
-            damageTaken++;
             TakeDamage(1);
             if (enemyPathfindingState.State == EnemyPathfinding.PathfindingState.Entrance)
                 {
@@ -59,5 +58,6 @@ public class LightEnemy : Enemy
                     EnemyDeath(100);
                 }
         }
+        audioSource.PlayOneShot(enemyHit);
     }
 }
