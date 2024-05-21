@@ -92,6 +92,9 @@ public class GameManager : SingletonInScene<GameManager>
 
         CanvasManager.Instance.UpdateLifeImage(Lives);
         EnemyManager.Instance.Restart();
+        DestroyProjectiles();
+
+        // Clean and spawn new player
         DestroyPlayer();
         StartCoroutine(SpawnPlayer(PlayerSpawnLocation));
     }
@@ -105,21 +108,13 @@ public class GameManager : SingletonInScene<GameManager>
         }
     }
 
-    //Added to test game over menu. 
-    protected override void Update()
+    private void DestroyProjectiles()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        Projectile[] projectiles = FindObjectsByType<Projectile>(FindObjectsSortMode.None);
+        for (int i = 0; i < projectiles.Length; ++i)
         {
-            Lives -= 1;
+            Destroy(projectiles[i].gameObject);
         }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            AddToScore(10);
-        }
-
-
-
     }
 
     // Event handler for when all enemies are killed

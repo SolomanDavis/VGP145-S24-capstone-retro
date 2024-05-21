@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5822654354410780698}
   - component: {fileID: 8819637126484353974}
   - component: {fileID: 5933220861091488584}
-  - component: {fileID: 5787313366680706231}
   - component: {fileID: 5879473451467336405}
+  - component: {fileID: -6718338265787161478}
   m_Layer: 0
   m_Name: PlayerProjectile
   m_TagString: PlayerProjectile
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1471467457
+  m_SortingLayerID: -1480949323
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 673985216, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
@@ -114,19 +114,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5787313366680706231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229014237943324433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9324a57737fa51540aad69180514a2d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 1
 --- !u!61 &5879473451467336405
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,7 +146,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.10067299}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -170,5 +157,19 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15, y: 0.45}
+  m_Size: {x: 0.15, y: 0.15040272}
   m_EdgeRadius: 0
+--- !u!114 &-6718338265787161478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229014237943324433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbcba9a6780bbb24fbe5a56fcdc5c5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2
+  bulletSpeed: -10

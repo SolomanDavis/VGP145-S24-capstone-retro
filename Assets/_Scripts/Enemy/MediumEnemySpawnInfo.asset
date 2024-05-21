@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978ec24556a637d468016ca1dd204911, type: 3}
   m_Name: MediumEnemySpawnInfo
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 657371619609228024, guid: 677982e7a85bccb489f96fab6f963aa0, type: 3}
+  Prefab: {fileID: 3173437615020374856, guid: f803ed4ab8da43b47ac6da3d41e61e44, type: 3}
   Rank: 1
   DistributionValue: 10

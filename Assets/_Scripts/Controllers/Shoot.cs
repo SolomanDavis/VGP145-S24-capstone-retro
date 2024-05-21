@@ -4,44 +4,34 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab; // Prefab of the bullet GameObject
+    [SerializeField] private Projectile bulletPrefab; // Prefab of the bullet GameObject
     [SerializeField] private Transform firePoint; // Point where the bullet will be spawned
-    [SerializeField] private float bulletSpeed = 10f; // Speed of the bullet
-    [SerializeField] AudioClip playerShoot;
+    [SerializeField] private AudioClip shootClip;
 
     private bool _isPaused = false;
-    
 
     private void Awake()
     {
         CanvasManager.Instance.GamePaused += () => _isPaused = true;
         CanvasManager.Instance.GameUnpaused += () => _isPaused = false;
     }
-   
 
-    private void Update()
+       private void Update()
     {
         if (_isPaused)
             return;
 
         if (Input.GetButtonDown("Fire1"))
         {
-            fire();
+            Fire();
         }
     }
 
-    void fire()
+    void Fire()
     {
         // Instantiate a bullet at the firePoint position
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        // Get the Rigidbody2D component of the bullet
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
-        // Apply velocity to the bullet (upward)
-        rb.velocity = Vector2.up * bulletSpeed;
-
-        if (playerShoot)
-            GetComponent<AudioSource>().PlayOneShot(playerShoot);
+        if (shootClip) GetComponent<AudioSource>().PlayOneShot(shootClip);
     }
 }

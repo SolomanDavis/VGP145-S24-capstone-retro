@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     private Animator animator;
     private BoxCollider2D bc;
-    AudioSource audioSource;
+    private AudioSource audioSource;
 
     //added rb to set player RigidBody position == to areaBoundaries
     Rigidbody2D rb;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         // Player movement
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
         transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
 
         // if the player's transform.x is == to areaBoundaryOne then ensure that the player does not move past it, left off scren.
@@ -63,11 +63,7 @@ public class PlayerController : MonoBehaviour
             newPosition.x = areaBoundaryTwo.transform.position.x;
             rb.transform.position = newPosition;
         }
-
-        // Check if the player is moving horizontally and set animation parameter accordingly
-        // animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
     }
-
 
     //Player Destruction
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,6 +77,10 @@ public class PlayerController : MonoBehaviour
 
             animator.SetTrigger("Die");
             audioSource.PlayOneShot(playerDeath);
+
+            // Disable shooting
+            Shoot shootController = GetComponent<Shoot>();
+            if (shootController) shootController.enabled = false;
         }
     }
 

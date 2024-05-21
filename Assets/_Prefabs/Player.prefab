@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2417884217742202239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.98, z: 0}
+  m_LocalPosition: {x: -0.01, y: 0.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1471467457
+  m_SortingLayerID: -1480949323
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 102847094, guid: b59f3f94e5b75a54894a731d2419baea, type: 3}
@@ -134,10 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f089d41b7a5ca4991b48cf83b84f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2229014237943324433, guid: 5b827a1df3bc2ec4fac9db7f843dd112, type: 3}
+  bulletPrefab: {fileID: -6718338265787161478, guid: 5b827a1df3bc2ec4fac9db7f843dd112, type: 3}
   firePoint: {fileID: 228590334022515372}
-  bulletSpeed: 10
-  playerShoot: {fileID: 8300000, guid: 774f9bb19a9c46d49aaaad340e19fc1a, type: 3}
+  shootClip: {fileID: 0}
 --- !u!50 &3974118525745430991
 Rigidbody2D:
   serializedVersion: 4
@@ -198,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d04c93da0f6de49ac103888b98a023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 7.5
   playerDeath: {fileID: 8300000, guid: e3bb5519fef28cf4f81233f1f02b66be, type: 3}
 --- !u!61 &8730534724032040390
 BoxCollider2D:
@@ -232,7 +231,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010419816, y: -0.046652257}
+  m_Offset: {x: 0.003985405, y: -0.075606495}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -243,7 +242,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64855045, y: 0.663386}
+  m_Size: {x: 0.6399708, y: 0.6054775}
   m_EdgeRadius: 0
 --- !u!82 &6880102219056741380
 AudioSource:

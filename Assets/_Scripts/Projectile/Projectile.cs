@@ -1,27 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    public float lifeTime;
+    Rigidbody2D rb;
+
+    [SerializeField] private float lifeTime;
+    [SerializeField] private float bulletSpeed = 10f;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.velocity = -Vector2.up * bulletSpeed;
+
+
         if (lifeTime <= 0)
         {
             lifeTime = 2.0f;
         }
 
+        CanvasManager.Instance.GamePaused += OnPause;
+        CanvasManager.Instance.GameUnpaused += OnUnpause;
+
         Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    { }
+
+    private void OnPause()
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-        }
+        if (rb) rb.velocity = Vector2.zero;
+    }
+
+    private void OnUnpause()
+    {
+        if (rb) rb.velocity = -Vector2.up * bulletSpeed;
     }
 }
 

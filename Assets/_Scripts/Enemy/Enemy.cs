@@ -1,26 +1,31 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using UnityEditor.ShaderKeywordFilter;
+using TMPro;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public event UnityAction EnemyKilled;
+
     protected SpriteRenderer sr;
     protected Rigidbody2D rb;
     protected BoxCollider2D bc;
     protected Animator anim;
-    AudioSource audioSource;
+    protected AudioSource audioSource;
+    protected EnemyPathfinding enemyPathfindingState;
 
-    [SerializeField] protected int EnemyHealth;
     [SerializeField] private EnemyProjectile enemyProjectile;
     public Transform enemyProjectileSpawn;
-    [SerializeField] private int projectileSpeed;
-    public float TimeToDestroy = 1;
-    [SerializeField] AudioClip enemydeath;
-    [SerializeField] private float shootCooldown = 1f;
-    public event UnityAction EnemyKilled;
+    [SerializeField] private TextMeshPro floatingScoreTextPrefab;
 
-    public float maxAngle = 45f;
+    [SerializeField] protected int enemyHealth;
+    [SerializeField] private float shootCooldown = 1f;
+    [SerializeField] private int entranceHoverScore;
+    [SerializeField] private int diveScore;
+
+    [SerializeField] AudioClip EnemyDeathClip;
+
+    public float isLookingDownMaxAngle = 45f;
 
     private bool _isPaused = false;
     private bool _canShoot = true;
@@ -39,6 +44,7 @@ public abstract class Enemy : MonoBehaviour
         bc = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        enemyPathfindingState = GetComponent<EnemyPathfinding>();
     }
 
     // Update is called once per frame
@@ -49,7 +55,6 @@ public abstract class Enemy : MonoBehaviour
 
         if (IsLookingDown() && _canShoot)
         {
-            
             Shoot();
         }
     }
@@ -57,39 +62,22 @@ public abstract class Enemy : MonoBehaviour
     // TriggerOnAnimationEvent
     public void Shoot()
     {
-        //This offset will allow the enemy script to choose to fire the projectile
-        //at the player with an offset to the left and right (we think....)
-        //int RandomNumberOffset = Random.Range(min, max);
+        Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
 
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, Quaternion.identity);
-        
-        currentProjectile.bulletSpeed = projectileSpeed;
-
+        // Initiate cooldown
         StartCoroutine(ShootCooldown());
-        
     }
-
-    /* public void Shoot(int min, int max)
-    {
-        //This offset will allow the enemy script to choose to fire the projectile
-        //at the player with an offset to the left and right (we think....)
-        int RandomNumberOffset = Random.Range(min, max);
-
-        EnemyProjectile currentProjectile = Instantiate(enemyProjectile, enemyProjectileSpawn.position, enemyProjectileSpawn.rotation);
-        currentProjectile.speed = projectileSpeed;
-        currentProjectile.offset = RandomNumberOffset;
-    }*/
 
     public virtual void TakeDamage(int damage)
     {
-        EnemyHealth -= damage;
-        if (EnemyHealth <= 0)
+        enemyHealth -= damage;
+        if (enemyHealth <= 0)
         {
             anim.SetTrigger("IsDead");
-
-            audioSource.PlayOneShot(enemydeath);
+            audioSource.PlayOneShot(EnemyDeathClip);
 
             bc.enabled = false; // Turn off box collider to prevent further damage
+            _canShoot = false; // Prevent shooting after death
         }
     }
 
@@ -104,16 +92,9 @@ public abstract class Enemy : MonoBehaviour
     public bool IsLookingDown()
     {
        Vector3 downVector = Vector3.down;
-      
-        //Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
+       float angle = Vector3.Angle(transform.up, downVector);
 
-       // Debug.DrawLine(Vector3.zero, Vector3.up, Color.green);
-
-        float angle = Vector3.Angle(transform.up, downVector);
-
-        //Debug.Log("Angle: " + angle);
-
-        return angle <= maxAngle;
+       return angle <= isLookingDownMaxAngle;
     }
 
     private IEnumerator ShootCooldown()
@@ -122,7 +103,11 @@ public abstract class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(shootCooldown);
 
-        _canShoot = true;
+        // If enemy is still alive, allow shooting again
+        if (enemyHealth > 0)
+        {
+            _canShoot = true;
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -130,6 +115,39 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("EnemyDeathCollider"))
         {
             EnemyDeath(0); 
+        }
+    }
+
+    // Calls EnemyDeath with relevant state score
+    public void CallDeathWithScore()
+    {
+        int score = GetScoreOnState();
+        EnemyDeath(score);
+    }
+
+    public void ShowFloatingScore()
+    {
+        int score = GetScoreOnState();
+
+        TextMeshPro floatingScore = Instantiate(floatingScoreTextPrefab, transform.position, Quaternion.identity);
+        floatingScore.text = score.ToString();
+        floatingScore.color = new Color(Random.value, Random.value, Random.value);
+
+        Destroy(floatingScore, 0.75f);
+    }
+
+    private int GetScoreOnState()
+    {
+        switch (enemyPathfindingState.State)
+        {
+            case EnemyPathfinding.PathfindingState.Entrance:
+            case EnemyPathfinding.PathfindingState.Hover:
+                return entranceHoverScore;
+            case EnemyPathfinding.PathfindingState.Dive:
+                return diveScore;
+            default:
+                Debug.LogWarning("No score set for state: " + enemyPathfindingState.State);
+                return 0;
         }
     }
 }
